@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from 'motion/react';
 import Threads from './components/Threads';
 import GradientText from './components/GradientText';
@@ -14,17 +14,19 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [canInteractWithContent, setCanInteractWithContent] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<number | null>(null);
+  const hasShownIndicator = useRef(false);
   
   const { scrollY } = useScroll();
 
-  // Check for mobile screen size
+  // Memoize mobile check to prevent unnecessary re-renders
+  const isMobile = useMemo(() => windowWidth < 768, [windowWidth]);
+
+  // Check for mobile screen size - update windowWidth state only
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
+    const checkMobile = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
@@ -55,39 +57,35 @@ function App() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Scroll indicator logic: Show after 3s inactivity, hide after 2s display
+  // Scroll indicator logic: Show once after 2s inactivity, stay for 4s, then never again
   useEffect(() => {
-    let showTimer: number;
-    let hideTimer: number;
+    if (hasShownIndicator.current) return;
 
-    const startInactivityTimer = () => {
-      clearTimeout(showTimer);
-      clearTimeout(hideTimer);
+    const showTimer = window.setTimeout(() => {
+      setShowScrollIndicator(true);
+      hasShownIndicator.current = true;
       
-      // Wait for 3 seconds of inactivity
-      showTimer = window.setTimeout(() => {
-        setShowScrollIndicator(true);
-        
-        // Hide after 2 seconds of being shown
-        hideTimer = window.setTimeout(() => {
-          setShowScrollIndicator(false);
-        }, 2000);
-      }, 3000);
-    };
+      // Hide after 4 seconds
+      const hideTimer = window.setTimeout(() => {
+        setShowScrollIndicator(false);
+      }, 4000);
+      
+      return () => clearTimeout(hideTimer);
+    }, 2000);
 
     const handleScroll = () => {
+      if (!hasShownIndicator.current) {
+        clearTimeout(showTimer);
+        hasShownIndicator.current = true;
+      }
       setShowScrollIndicator(false);
-      startInactivityTimer();
     };
 
-    // Start timer on load
-    startInactivityTimer();
-
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { once: true });
+    
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       clearTimeout(showTimer);
-      clearTimeout(hideTimer);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -125,6 +123,27 @@ function App() {
     }));
   };
 
+  // Memoize Threads component to prevent re-renders on state changes
+  const mobileThreads = useMemo(() => (
+    <div style={{ width: '100%', height: '100%', position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', maxWidth: '1080px', maxHeight: '1080px', opacity: 0.5 }}>
+      <Threads
+        color={[0.2, 0.2, 0.8]}
+        amplitude={0.8}
+        distance={0}
+        enableMouseInteraction={false}
+      />
+    </div>
+  ), []);
+
+  const desktopThreads = useMemo(() => (
+    <Threads
+      color={[0.2, 0.2, 0.8]}
+      amplitude={1}
+      distance={0.4}
+      enableMouseInteraction={false}
+    />
+  ), []);
+
   return (
     <div ref={containerRef} className="relative min-h-[200vh] bg-white text-[#1c1c1c] font-sans">
       {/* Fixed Background - White with Blue Threads */}
@@ -134,24 +153,7 @@ function App() {
           scale: bgScale
         }}
       >
-        {isMobile ? (
-           // Mobile specific background container as requested
-           <div style={{ width: '100%', height: '100%', position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', maxWidth: '1080px', maxHeight: '1080px', opacity: 0.5 }}>
-              <Threads
-                color={[0.2, 0.2, 0.8]}
-                amplitude={0.8}
-                distance={0}
-                enableMouseInteraction={false}
-              />
-           </div>
-        ) : (
-          <Threads
-            color={[0.2, 0.2, 0.8]}
-            amplitude={1}
-            distance={0.4}
-            enableMouseInteraction={false}
-          />
-        )}
+        {isMobile ? mobileThreads : desktopThreads}
       </motion.div>
 
       {/* Hero Section - Logo Centered */}

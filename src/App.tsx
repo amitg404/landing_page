@@ -342,7 +342,7 @@ function App() {
               {/* Desktop Only Text */}
               <div className="hidden md:block">
                 <h3 className="text-2xl font-bold text-[#1c1c1c] mb-2">You're on the list!</h3>
-                <p className="text-base text-[#3b3b3b]">We'll notify you when Medvora launches.</p>
+                <p className="text-base text-[#3b3b3b]">We'll get in touch</p>
               </div>
             </motion.div>
           )}

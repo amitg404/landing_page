@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth, signInWithGoogle, saveBetaSignup } from './lib/firebase';
 import GradientText from './components/ui/GradientText';
+import FeedbackWidget from './components/ui/FeedbackWidget';
 
 // Backgrounds
 import Threads from './components/backgrounds/Threads';
@@ -182,6 +182,10 @@ function App() {
           Login
         </button>
       )}
+
+      {/* Internal Feedback Widget - Remove before final deploy if needed */}
+      {/* Set to false to hide completely from the UI build */}
+      {true && <FeedbackWidget />}
     </div>
   );
 }

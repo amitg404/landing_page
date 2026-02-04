@@ -2,91 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family:
-    "Inter",
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: dark;
-  color: #ffffff;
-  background-color: #030712;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@layer base {
+  :root {
+    /* Primary Colors (Brand Blue) */
+    --b50: #ebebfa;
+    --b75: #ababea;
+    --b100: #8989e1;
+    --b200: #5e5e98;
+    --b300: #3333CC;
+    --b400: #24248f;
+    --b500: #1f1f7c;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    /* Neutrals (Grays) */
+    --n0: #ffffff;
+    --n20: #f5f5f5;
+    --n40: #dedede;
+    --n60: #b0b0b0;
+    --n80: #949494;
+    --n100: #757575;
+    --n200: #575757;
+    --n300: #3b3b3b;
+    --n400: #1c1c1c;
 
-html {
-  scroll-behavior: smooth;
-}
-
-
-body {
-  min-height: 100vh;
-  overflow-x: hidden;
-  /* Hide scrollbar */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-#root {
-  min-height: 100vh;
-}
-
-/* Animations */
-@keyframes pulse-glow {
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    /* Success */
+    --g400: #3bc73b;
+    /* Error */
+    --r200: #ff3333;
+    /* Warning */
+    --y200: #ffd666;
   }
-  50% {
-    box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+
+  * {
+    scroll-behavior: smooth;
+  }
+
+  html {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+  }
+
+  body {
+    @apply antialiased text-gray-900 bg-white;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-semibold;
   }
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
+@layer components {
+  .btn-primary {
+    @apply bg-[#3333CC] text-white px-6 py-3 rounded-xl font-medium transition-all hover:bg-[#24248f] active:bg-[#1f1f7c] shadow-[0_4px_12px_rgba(51,51,204,0.3)] hover:shadow-[0_6px_16px_rgba(51,51,204,0.4)] hover:-translate-y-0.5 active:translate-y-0;
   }
 }
-
-@keyframes pulse-shadow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(51, 51, 204, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 4px rgba(51, 51, 204, 0);
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer 2s infinite;
-}
-
-.animate-pulse-shadow {
-  animation: pulse-shadow 2s infinite;
-}
-

@@ -104,7 +104,7 @@ function App() {
               className="w-[400px] h-[400px] object-contain"
             />
             <p
-              className={`text-3xl md:text-4xl font-medium text-center max-w-4xl px-6 mt-8 ${
+              className={`text-3xl md:text-4xl font-medium text-center max-w-4xl px-6 mt-2 ${
                 viewMode === 'students' ? 'text-white' : 'text-gray-800'
               }`}
             >

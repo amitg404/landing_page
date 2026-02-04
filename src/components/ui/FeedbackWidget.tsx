@@ -16,7 +16,7 @@ export default function FeedbackWidget() {
     setStatus('idle');
 
     try {
-      const text = `🐞 *Bug Report / Feedback*\n\n${message}`;
+      const text = `🐞 Bug Report / Feedback\n\n${message}`;
       const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: {
@@ -25,7 +25,6 @@ export default function FeedbackWidget() {
         body: JSON.stringify({
           chat_id: CHAT_ID,
           text: text,
-          parse_mode: 'Markdown',
         }),
       });
 
@@ -34,6 +33,8 @@ export default function FeedbackWidget() {
         setMessage('');
         setTimeout(() => setStatus('idle'), 3000);
       } else {
+        const errorData = await response.json();
+        console.error('Telegram Error:', errorData);
         setStatus('error');
       }
     } catch (error) {
@@ -47,21 +48,21 @@ export default function FeedbackWidget() {
   return (
     <div className="fixed bottom-4 right-4 z-[100] flex flex-col items-end gap-2">
       {isOpen && (
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-lg shadow-xl w-80 animate-in slide-in-from-bottom-2 fade-in duration-200">
+        <div className="bg-neutral-900 border border-neutral-800 p-4 rounded-lg shadow-2xl w-80 animate-in slide-in-from-bottom-2 fade-in duration-200">
             <div className="flex justify-between items-center mb-2">
             <h3 className="text-white font-medium text-sm">Submit Feedback</h3>
             <button 
                 onClick={() => setIsOpen(false)}
-                className="text-white/60 hover:text-white"
+                className="text-neutral-400 hover:text-white"
             >
                 ✕
             </button>
             </div>
-          <p className="text-white/70 text-xs mb-3">
+          <p className="text-neutral-400 text-xs mb-3">
             Found a bug? Let us know! This is a WIP build.
           </p>
           <textarea
-            className="w-full h-24 bg-black/20 border border-white/10 rounded p-2 text-white text-sm focus:outline-none focus:border-blue-500/50 resize-none placeholder:text-white/30"
+            className="w-full h-24 bg-neutral-800 border border-neutral-700 rounded p-2 text-white text-sm focus:outline-none focus:border-blue-500 resize-none placeholder:text-neutral-500"
             placeholder="Describe the issue..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}

@@ -9,7 +9,6 @@ import Prism from './components/backgrounds/Prism';
 import Iridescence from './components/backgrounds/Iridescence';
 
 // Sections
-import HeroSection from './components/sections/HeroSection';
 import NavSection from './components/sections/NavSection';
 import AboutSection from './components/sections/AboutSection';
 import EndorsedBySection from './components/sections/EndorsedBySection';
@@ -71,10 +70,8 @@ function App() {
     await saveBetaSignup(user.email, 'doctor_interest');
   };
 
-  const isDarkMode = viewMode === 'students';
-
   return (
-    <div className="relative min-h-screen">
+    <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
       {/* Fixed Background Layer - consistent throughout */}
       <div className="fixed inset-0 z-0">
         {viewMode === 'default' && (
@@ -96,13 +93,38 @@ function App() {
         )}
       </div>
 
+      {/* Hero Section with Logo */}
+      <section className="fixed inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
+        <motion.div
+          className="flex flex-col items-center"
+          animate={{
+            scale: scrollProgress > 0.1 ? 0.213 : 1,
+            x: scrollProgress > 0.1 ? '-43%' : '0%',
+            y: scrollProgress > 0.1 ? '-43vh' : '0%'
+          }}
+          transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+        >
+          <img
+            src={viewMode === 'students' ? '/medvora_logo_white.png' : '/medvora_logo.png'}
+            alt="Medvora"
+            className="w-[300px] h-[300px] object-contain"
+          />
+          <motion.p
+            className={`text-2xl md:text-3xl font-medium text-center max-w-3xl px-4 mt-6 ${
+              viewMode === 'students' ? 'text-white' : 'text-gray-800'
+            }`}
+            animate={{ opacity: scrollProgress > 0.1 ? 0 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            Personalized Clinical AI Assistant for Doctors and Medical Students
+          </motion.p>
+        </motion.div>
+      </section>
+
       {/* Content Layer */}
       <div className="relative z-10">
-        {/* Hero Section - Always visible */}
-        <HeroSection viewMode={viewMode} scrollProgress={scrollProgress} />
-
         {/* Navigation Section */}
-        <NavSection viewMode={viewMode} onModeChange={setViewMode} isDarkMode={isDarkMode} />
+        <NavSection viewMode={viewMode} onModeChange={setViewMode} />
 
         {/* Content sections based on mode */}
         {viewMode === 'default' && (
@@ -143,42 +165,18 @@ function App() {
         )}
       </div>
 
-      {/* Login button - fixed top right, always visible when not logged in */}
+      {/* Login button - fixed top right */}
       {!user && (
         <motion.button
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: scrollProgress > 0.05 ? 1 : 0, y: scrollProgress > 0.05 ? 0 : -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
           onClick={handleLogin}
           className="fixed top-6 right-6 z-50 btn-primary"
         >
           Login
         </motion.button>
       )}
-
-      {/* Animated Logo - moves from center to top-left */}
-      <motion.div
-        initial={{ opacity: 1 }}
-        animate={{
-          position: scrollProgress > 0.1 ? 'fixed' : 'absolute',
-          top: scrollProgress > 0.1 ? '24px' : '50%',
-          left: scrollProgress > 0.1 ? '24px' : '50%',
-          x: scrollProgress > 0.1 ? '0%' : '-50%',
-          y: scrollProgress > 0.1 ? '0%' : '-50%',
-          width: scrollProgress > 0.1 ? '64px' : '300px',
-          height: scrollProgress > 0.1 ? '64px' : '300px',
-        }}
-        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-        className="z-50 pointer-events-none"
-        style={{
-          position: scrollProgress > 0.1 ? 'fixed' : 'absolute',
-        }}
-      >
-        <img
-          src={viewMode === 'students' ? '/medvora_logo_white.png' : '/medvora_logo.png'}
-          alt="Medvora"
-          className="w-full h-full object-contain"
-        />
-      </motion.div>
     </div>
   );
 }

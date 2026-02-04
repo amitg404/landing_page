@@ -1,3 +1,5 @@
+import GlareHover from './GlareHover';
+
 type ViewMode = 'default' | 'students' | 'doctors';
 
 interface NavTabsProps {
@@ -7,27 +9,58 @@ interface NavTabsProps {
 
 export default function NavTabs({ activeMode, onModeChange }: NavTabsProps) {
   return (
-    <div className="flex items-center justify-center gap-8">
-      <button
-        onClick={() => onModeChange('students')}
-        className={`px-8 py-4 text-xl font-medium rounded-xl transition-all duration-300 ${
-          activeMode === 'students'
-            ? 'bg-[#3333CC] text-white shadow-[0_4px_12px_rgba(51,51,204,0.3)]'
-            : 'bg-white text-gray-900 border-2 border-gray-300 hover:border-[#3333CC]'
-        }`}
+    <div className="flex items-center gap-3">
+      <GlareHover
+        width="auto"
+        height="auto"
+        background="transparent"
+        borderRadius="12px"
+        borderColor="transparent"
+        glareColor="#ffffff"
+        glareOpacity={0.3}
+        glareAngle={-30}
+        glareSize={300}
+        transitionDuration={800}
+        className="border-0"
+        style={{ padding: 0 }}
       >
-        For Students
-      </button>
-      <button
-        onClick={() => onModeChange('doctors')}
-        className={`px-8 py-4 text-xl font-medium rounded-xl transition-all duration-300 ${
-          activeMode === 'doctors'
-            ? 'bg-[#3333CC] text-white shadow-[0_4px_12px_rgba(51,51,204,0.3)]'
-            : 'bg-white text-gray-900 border-2 border-gray-300 hover:border-[#3333CC]'
-        }`}
+        <button
+          onClick={() => onModeChange('students')}
+          className={`px-6 py-3 text-base font-semibold rounded-xl transition-all duration-300 w-full ${
+            activeMode === 'students'
+              ? 'bg-[#3333CC] text-white shadow-[0_4px_12px_rgba(51,51,204,0.4)]'
+              : 'bg-white/50 backdrop-blur-sm text-gray-900 hover:bg-white/80 border border-white/30'
+          }`}
+        >
+          For Students
+        </button>
+      </GlareHover>
+      
+      <GlareHover
+        width="auto"
+        height="auto"
+        background="transparent"
+        borderRadius="12px"
+        borderColor="transparent"
+        glareColor="#ffffff"
+        glareOpacity={0.3}
+        glareAngle={-30}
+        glareSize={300}
+        transitionDuration={800}
+        className="border-0"
+        style={{ padding: 0 }}
       >
-        For Doctors
-      </button>
+        <button
+          onClick={() => onModeChange('doctors')}
+          className={`px-6 py-3 text-base font-semibold rounded-xl transition-all duration-300 w-full ${
+            activeMode === 'doctors'
+              ? 'bg-[#3333CC] text-white shadow-[0_4px_12px_rgba(51,51,204,0.4)]'
+              : 'bg-white/50 backdrop-blur-sm text-gray-900 hover:bg-white/80 border border-white/30'
+          }`}
+        >
+          For Doctors
+        </button>
+      </GlareHover>
     </div>
   );
 }

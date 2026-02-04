@@ -449,7 +449,11 @@ const Prism = ({
     suspendWhenOffscreen
   ]);
 
-  return <div className={`w-full h-full absolute inset-0 ${className}`} ref={containerRef} />;
+  return (
+    <div className={`w-full h-full absolute inset-0 bg-black ${className}`}>
+      <div className="w-full h-full absolute inset-0" ref={containerRef} />
+    </div>
+  );
 };
 
 export default Prism;

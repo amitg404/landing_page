@@ -22,11 +22,6 @@ export default function HeroSection({ viewMode, scrollProgress }: HeroSectionPro
     return () => clearTimeout(timer);
   }, []);
 
-  // Logo positioning based on scroll
-  const isScrolled = scrollProgress > 0.1;
-  const logoScale = isScrolled ? 0.24 : 1; // 48px / 200px = 0.24
-  const logoY = isScrolled ? -45 : 0; // Move to top
-
   return (
     <Section id="hero">
       {/* Background based on mode */}
@@ -48,18 +43,16 @@ export default function HeroSection({ viewMode, scrollProgress }: HeroSectionPro
         <Iridescence color={[0.6, 0.8, 0.8]} mouseReact={false} amplitude={0.1} speed={0.7} />
       )}
 
-      {/* Logo - centered initially, then moves to header */}
-      <div className="relative z-10 flex items-center justify-center h-full">
-        <motion.div
-          animate={{
-            scale: logoScale,
-            y: `${logoY}vh`
-          }}
-          transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-          className="w-[200px] h-[200px]"
-        >
+      {/* Logo and tagline - centered and positioned higher */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full pt-20">
+        <div className="w-[300px] h-[300px] mb-6">
           <img src="/medvora_logo.png" alt="Medvora" className="w-full h-full object-contain" />
-        </motion.div>
+        </div>
+        <p className={`text-2xl md:text-3xl font-medium text-center max-w-3xl px-4 ${
+          viewMode === 'students' ? 'text-white' : 'text-gray-800'
+        }`}>
+          Personalized Clinical AI Assistant for Doctors and Medical Students
+        </p>
       </div>
 
       {/* Scroll hint */}

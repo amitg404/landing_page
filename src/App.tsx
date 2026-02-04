@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth, signInWithGoogle, saveBetaSignup } from './lib/firebase';
 
@@ -68,7 +69,7 @@ function App() {
   const isDarkMode = viewMode === 'students';
 
   return (
-    <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
+    <div className="min-h-screen overflow-y-auto">
       {/* Hero Section - Always visible */}
       <HeroSection viewMode={viewMode} scrollProgress={scrollProgress} />
 
@@ -113,22 +114,30 @@ function App() {
         </>
       )}
 
-      {/* Login button - fixed top right, appears after scroll */}
-      {scrollProgress > 0.1 && !user && (
-        <button
+      {/* Login button - fixed top right, always visible when not logged in */}
+      {!user && (
+        <motion.button
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: scrollProgress > 0.05 ? 1 : 0, y: scrollProgress > 0.05 ? 0 : -20 }}
           onClick={handleLogin}
           className="fixed top-6 right-6 z-50 btn-primary"
         >
           Login
-        </button>
+        </motion.button>
       )}
 
       {/* Logo - fixed top left after scroll */}
-      {scrollProgress > 0.5 && (
-        <div className="fixed top-6 left-6 z-50 w-12 h-12">
-          <img src="/medvora_logo.png" alt="Medvora" className="w-full h-full object-contain" />
-        </div>
-      )}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{
+          opacity: scrollProgress > 0.15 ? 1 : 0,
+          x: scrollProgress > 0.15 ? 0 : -20
+        }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+        className="fixed top-6 left-6 z-50 w-16 h-16"
+      >
+        <img src="/medvora_logo.png" alt="Medvora" className="w-full h-full object-contain" />
+      </motion.div>
     </div>
   );
 }

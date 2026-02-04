@@ -10,7 +10,7 @@ export default function Section({ children, className = '', id }: SectionProps) 
   return (
     <section
       id={id}
-      className={`relative w-full h-screen snap-start snap-always overflow-hidden ${className}`}
+      className={`relative w-full min-h-screen overflow-hidden ${className}`}
     >
       {children}
     </section>

@@ -13,29 +13,29 @@ const stats = [
 export default function HelpDoctorsSection() {
   return (
     <Section id="help-doctors" className="bg-white">
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-8 py-16 overflow-y-auto">
-        <h2 className="text-4xl font-semibold text-gray-900 mb-4">How We Help Doctors</h2>
-        <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 md:px-8 py-12 md:py-16 overflow-y-auto">
+        <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-3 md:mb-4">How We Help Doctors</h2>
+        <p className="text-lg md:text-xl text-gray-600 mb-8 md:mb-12 text-center max-w-3xl px-4">
           Reducing cognitive load, increasing patient context, and improving time efficiency
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8 max-w-5xl w-full">
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-2xl p-8 shadow-[10px_10px_20px_rgba(0,0,0,0.3)] border-r-[3px] border-b-[3px] border-black hover:shadow-[12px_12px_24px_rgba(0,0,0,0.35)] transition-all"
+              className="bg-white rounded-xl md:rounded-2xl p-4 md:p-8 shadow-[8px_8px_16px_rgba(0,0,0,0.3)] md:shadow-[10px_10px_20px_rgba(0,0,0,0.3)] border-r-[2px] border-b-[2px] md:border-r-[3px] md:border-b-[3px] border-black hover:shadow-[10px_10px_20px_rgba(0,0,0,0.35)] md:hover:shadow-[12px_12px_24px_rgba(0,0,0,0.35)] transition-all"
             >
-              <div className="text-5xl font-semibold text-[#3333CC] mb-2">
+              <div className="text-3xl md:text-5xl font-semibold text-[#3333CC] mb-1 md:mb-2 break-words">
                 <CountUp to={stat.value} duration={1.5} separator="," />
                 {stat.suffix}
               </div>
-              <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
+              <p className="text-xs md:text-sm text-gray-600 font-medium leading-tight">{stat.label}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-12 max-w-3xl text-center">
-          <p className="text-lg text-gray-700">
+        <div className="mt-8 md:mt-12 max-w-3xl text-center px-4">
+          <p className="text-base md:text-lg text-gray-700">
             Medvora reduces these burnout rates by automating administrative tasks, providing
             instant patient insights, and streamlining clinical workflows.
           </p>

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth, signInWithGoogle, saveBetaSignup } from './lib/firebase';
+import GradientText from './components/ui/GradientText';
 
 // Backgrounds
 import Threads from './components/backgrounds/Threads';
@@ -103,13 +105,14 @@ function App() {
               alt="Medvora"
               className="w-[200px] h-[200px] md:w-[300px] md:h-[300px] lg:w-[400px] lg:h-[400px] object-contain"
             />
-            <p
-              className={`text-lg md:text-2xl lg:text-3xl xl:text-4xl font-medium text-center max-w-4xl px-4 md:px-6 -mt-12 ${
-                viewMode === 'students' ? 'text-white' : 'text-gray-800'
-              }`}
+            <GradientText
+              colors={['#3333CC', '#8989e1', '#3333CC']}
+              animationSpeed={3}
+              showBorder={false}
+              className={`text-lg md:text-2xl lg:text-3xl xl:text-4xl font-medium text-center max-w-4xl px-4 md:px-6 -mt-12`}
             >
               Personalized Clinical AI Assistant for Doctors and Medical Students
-            </p>
+            </GradientText>
           </div>
         </div>
       ) : (

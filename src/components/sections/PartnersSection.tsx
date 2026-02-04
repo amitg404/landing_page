@@ -1,11 +1,11 @@
 import Section from '../layout/Section';
-import Marquee from '../ui/Marquee';
+import LogoLoop from '../ui/LogoLoop';
 
 const partners = [
-  { name: 'IIT Dharwad', logo: '/IIT_Dharwad.svg' },
-  { name: 'College 1', logo: '/college.png' },
-  { name: 'College 2', logo: '/college1.png' },
-  { name: 'MMC', logo: '/mmc.jpg' }
+  { src: '/IIT_Dharwad.svg', alt: 'IIT Dharwad' },
+  { src: '/college.png', alt: 'College 1' },
+  { src: '/college1.png', alt: 'College 2' },
+  { src: '/mmc.jpg', alt: 'MMC' }
 ];
 
 export default function PartnersSection() {
@@ -15,20 +15,16 @@ export default function PartnersSection() {
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-8 md:mb-10 lg:mb-12">
           Our Partners
         </h2>
-        <Marquee speed={50} className="w-full">
-          {partners.map((partner, idx) => (
-            <div
-              key={idx}
-              className="mx-2 md:mx-4 lg:mx-8 flex items-center justify-center bg-white rounded-lg md:rounded-xl lg:rounded-2xl p-3 md:p-5 lg:p-8 shadow-md min-w-[80px] md:min-w-[140px] lg:min-w-[200px] h-[60px] md:h-[90px] lg:h-[120px]"
-            >
-              <img
-                src={partner.logo}
-                alt={partner.name}
-                className="max-w-full max-h-full object-contain"
-              />
-            </div>
-          ))}
-        </Marquee>
+        <LogoLoop
+          logos={partners}
+          speed={70}
+          direction="left"
+          logoHeight={60}
+          gap={60}
+          hoverSpeed={0}
+          fadeOut={false}
+          ariaLabel="Our Partners"
+        />
       </div>
     </Section>
   );

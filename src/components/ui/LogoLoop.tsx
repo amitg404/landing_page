@@ -6,11 +6,11 @@ const ANIMATION_CONFIG = {
   COPY_HEADROOM: 2
 };
 
-const toCssLength = (value: string | number | undefined) => (typeof value === 'number' ? `${value}px` : (value ?? undefined));
+const toCssLength = value => (typeof value === 'number' ? `${value}px` : (value ?? undefined));
 
-const cx = (...parts: (string | boolean | undefined)[]) => parts.filter(Boolean).join(' ');
+const cx = (...parts) => parts.filter(Boolean).join(' ');
 
-const useResizeObserver = (callback: () => void, elements: React.RefObject<HTMLElement>[], dependencies: any[]) => {
+const useResizeObserver = (callback, elements, dependencies) => {
   useEffect(() => {
     if (!window.ResizeObserver) {
       const handleResize = () => callback();
@@ -33,7 +33,7 @@ const useResizeObserver = (callback: () => void, elements: React.RefObject<HTMLE
   }, [callback, ...dependencies]);
 };
 
-const useImageLoader = (seqRef: React.RefObject<HTMLElement>, onLoad: () => void, dependencies: any[]) => {
+const useImageLoader = (seqRef, onLoad, dependencies) => {
   useEffect(() => {
     const images = seqRef.current?.querySelectorAll('img') ?? [];
 
@@ -51,7 +51,7 @@ const useImageLoader = (seqRef: React.RefObject<HTMLElement>, onLoad: () => void
     };
 
     images.forEach(img => {
-      const htmlImg = img as HTMLImageElement;
+      const htmlImg = img;
       if (htmlImg.complete) {
         handleImageLoad();
       } else {
@@ -69,17 +69,9 @@ const useImageLoader = (seqRef: React.RefObject<HTMLElement>, onLoad: () => void
   }, [onLoad, seqRef, ...dependencies]);
 };
 
-const useAnimationLoop = (
-  trackRef: React.RefObject<HTMLDivElement>,
-  targetVelocity: number,
-  seqWidth: number,
-  seqHeight: number,
-  isHovered: boolean,
-  hoverSpeed: number | undefined,
-  isVertical: boolean
-) => {
-  const rafRef = useRef<number | null>(null);
-  const lastTimestampRef = useRef<number | null>(null);
+const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical) => {
+  const rafRef = useRef(null);
+  const lastTimestampRef = useRef(null);
   const offsetRef = useRef(0);
   const velocityRef = useRef(0);
 
@@ -109,7 +101,7 @@ const useAnimationLoop = (
       };
     }
 
-    const animate = (timestamp: number) => {
+    const animate = timestamp => {
       if (lastTimestampRef.current === null) {
         lastTimestampRef.current = timestamp;
       }
@@ -148,38 +140,7 @@ const useAnimationLoop = (
   }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical, trackRef]);
 };
 
-interface LogoItem {
-  node?: React.ReactNode;
-  src?: string;
-  srcSet?: string;
-  sizes?: string;
-  width?: number;
-  height?: number;
-  alt?: string;
-  title?: string;
-  href?: string;
-  ariaLabel?: string;
-}
-
-interface LogoLoopProps {
-  logos: LogoItem[];
-  speed?: number;
-  direction?: 'left' | 'right' | 'up' | 'down';
-  width?: string | number;
-  logoHeight?: number;
-  gap?: number;
-  pauseOnHover?: boolean;
-  hoverSpeed?: number;
-  fadeOut?: boolean;
-  fadeOutColor?: string;
-  scaleOnHover?: boolean;
-  renderItem?: (item: LogoItem, key: string) => React.ReactNode;
-  ariaLabel?: string;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-export const LogoLoop = memo<LogoLoopProps>(
+export const LogoLoop = memo(
   ({
     logos,
     speed = 120,
@@ -197,9 +158,9 @@ export const LogoLoop = memo<LogoLoopProps>(
     className,
     style
   }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const trackRef = useRef<HTMLDivElement>(null);
-    const seqRef = useRef<HTMLUListElement>(null);
+    const containerRef = useRef(null);
+    const trackRef = useRef(null);
+    const seqRef = useRef(null);
 
     const [seqWidth, setSeqWidth] = useState(0);
     const [seqHeight, setSeqHeight] = useState(0);
@@ -290,7 +251,7 @@ export const LogoLoop = memo<LogoLoopProps>(
     }, [effectiveHoverSpeed]);
 
     const renderLogoItem = useCallback(
-      (item: LogoItem, key: string) => {
+      (item, key) => {
         if (renderItem) {
           return (
             <li
@@ -407,7 +368,7 @@ export const LogoLoop = memo<LogoLoopProps>(
           : (toCssLength(width) ?? '100%'),
         ...cssVariables,
         ...style
-      } as React.CSSProperties),
+      }),
       [width, cssVariables, style, isVertical]
     );
 

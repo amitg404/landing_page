@@ -26,7 +26,7 @@ export default function NavTabs({ activeMode, onModeChange }: NavTabsProps) {
       >
         <button
           onClick={() => onModeChange('students')}
-          className={`px-6 py-3 text-base font-semibold rounded-xl transition-all duration-300 w-full ${
+          className={`px-4 py-2 md:px-8 md:py-4 lg:px-12 lg:py-6 text-sm md:text-lg lg:text-2xl font-semibold rounded-xl transition-all duration-300 w-full ${
             activeMode === 'students'
               ? 'bg-[#3333CC] text-white shadow-[0_4px_12px_rgba(51,51,204,0.4)]'
               : 'bg-white/50 backdrop-blur-sm text-gray-900 hover:bg-white/80 border border-white/30'
@@ -52,7 +52,7 @@ export default function NavTabs({ activeMode, onModeChange }: NavTabsProps) {
       >
         <button
           onClick={() => onModeChange('doctors')}
-          className={`px-6 py-3 text-base font-semibold rounded-xl transition-all duration-300 w-full ${
+          className={`px-4 py-2 md:px-8 md:py-4 lg:px-12 lg:py-6 text-sm md:text-lg lg:text-2xl font-semibold rounded-xl transition-all duration-300 w-full ${
             activeMode === 'doctors'
               ? 'bg-[#3333CC] text-white shadow-[0_4px_12px_rgba(51,51,204,0.4)]'
               : 'bg-white/50 backdrop-blur-sm text-gray-900 hover:bg-white/80 border border-white/30'

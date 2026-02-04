@@ -101,10 +101,10 @@ function App() {
             <img
               src={viewMode === 'students' ? '/medvora_logo_white.png' : '/medvora_logo.png'}
               alt="Medvora"
-              className="w-[400px] h-[400px] object-contain"
+              className="w-[200px] h-[200px] md:w-[300px] md:h-[300px] lg:w-[400px] lg:h-[400px] object-contain"
             />
             <p
-              className={`text-3xl md:text-4xl font-medium text-center max-w-4xl px-6 mt-2 ${
+              className={`text-lg md:text-2xl lg:text-3xl xl:text-4xl font-medium text-center max-w-4xl px-4 md:px-6 -mt-4 ${
                 viewMode === 'students' ? 'text-white' : 'text-gray-800'
               }`}
             >
@@ -114,11 +114,11 @@ function App() {
         </div>
       ) : (
         // Small logo - top left
-        <div className="fixed top-6 left-6 z-10 pointer-events-none">
+        <div className="fixed top-4 left-4 md:top-6 md:left-6 z-10 pointer-events-none">
           <img
             src={viewMode === 'students' ? '/medvora_logo_white.png' : '/medvora_logo.png'}
             alt="Medvora"
-            className="w-16 h-16 object-contain"
+            className="w-20 h-20 md:w-32 md:h-32 object-contain"
           />
         </div>
       )}

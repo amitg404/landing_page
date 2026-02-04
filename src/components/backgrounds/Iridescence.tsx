@@ -1,5 +1,5 @@
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
 const vertexShader = `
 attribute vec2 uv;
@@ -52,7 +52,7 @@ interface IridescenceProps {
   className?: string;
 }
 
-export default function Iridescence({ 
+const Iridescence = memo(function Iridescence({ 
   color = [0.6, 0.8, 0.8], 
   speed = 0.7, 
   amplitude = 0.1, 
@@ -61,9 +61,12 @@ export default function Iridescence({
 }: IridescenceProps) {
   const ctnDom = useRef<HTMLDivElement>(null);
   const mousePos = useRef({ x: 0.5, y: 0.5 });
+  const isInitialized = useRef(false);
 
   useEffect(() => {
-    if (!ctnDom.current) return;
+    if (!ctnDom.current || isInitialized.current) return;
+    isInitialized.current = true;
+    
     const ctn = ctnDom.current;
     const renderer = new Renderer();
     const gl = renderer.gl;
@@ -125,15 +128,20 @@ export default function Iridescence({
     }
 
     return () => {
+      isInitialized.current = false;
       cancelAnimationFrame(animateId);
       window.removeEventListener('resize', resize);
       if (mouseReact) {
         ctn.removeEventListener('mousemove', handleMouseMove);
       }
-      ctn.removeChild(gl.canvas);
+      if (ctn.contains(gl.canvas)) {
+        ctn.removeChild(gl.canvas);
+      }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [color, speed, amplitude, mouseReact]);
+  }, []);
 
   return <div ref={ctnDom} className={`w-full h-full absolute inset-0 ${className}`} />;
-}
+});
+
+export default Iridescence;

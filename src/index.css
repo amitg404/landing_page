@@ -32,10 +32,6 @@
     --y200: #ffd666;
   }
 
-  * {
-    scroll-behavior: smooth;
-  }
-
   html {
     scroll-snap-type: y mandatory;
     overflow-y: scroll;

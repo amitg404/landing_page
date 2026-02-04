@@ -17,7 +17,7 @@ export default function ProductGallerySection() {
         <h2 className="text-4xl font-semibold text-white mb-12">Product Gallery</h2>
 
         {/* Main image display */}
-        <div className="max-w-4xl w-full mb-8">
+        <div className="w-full mb-8 px-8">
           <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20">
             <img
               src={products[selectedImage].image}

@@ -15,11 +15,11 @@ export default function HelpDoctorsSection() {
     <Section id="help-doctors" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 md:px-8 py-12 md:py-16 overflow-y-auto">
         <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-3 md:mb-4">How We Help Doctors</h2>
-        <p className="text-lg md:text-xl text-gray-600 mb-8 md:mb-12 text-center max-w-3xl px-4">
+        <p className="text-lg md:text-xl text-gray-600 mb-8 md:mb-12 text-center px-8">
           Reducing cognitive load, increasing patient context, and improving time efficiency
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8 max-w-5xl w-full">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8 w-full px-8">
           {stats.map((stat, idx) => (
             <div
               key={idx}
@@ -34,7 +34,7 @@ export default function HelpDoctorsSection() {
           ))}
         </div>
 
-        <div className="mt-8 md:mt-12 max-w-3xl text-center px-4">
+        <div className="mt-8 md:mt-12 text-center px-8">
           <p className="text-base md:text-lg text-gray-700">
             Medvora reduces these burnout rates by automating administrative tasks, providing
             instant patient insights, and streamlining clinical workflows.

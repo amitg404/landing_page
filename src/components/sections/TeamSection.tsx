@@ -14,7 +14,7 @@ export default function TeamSection() {
     <Section id="team" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-8 py-16 overflow-y-auto">
         <h2 className="text-4xl font-semibold text-gray-900 mb-12">Meet the Team</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-8">
           {teamMembers.map((member, idx) => (
             <div
               key={idx}

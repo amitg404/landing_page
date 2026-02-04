@@ -22,7 +22,7 @@ export default function ComplianceSection() {
             </div>
           ))}
         </Marquee>
-        <p className="mt-12 text-lg text-gray-600 text-center max-w-3xl">
+        <p className="mt-12 text-lg text-gray-600 text-center px-8">
           We adhere to the highest standards of data protection and healthcare compliance to ensure
           your information is always secure.
         </p>

@@ -4,7 +4,7 @@ export default function AboutSection() {
   return (
     <Section id="about" className="bg-transparent">
       <div className="relative z-10 flex items-center justify-center h-full px-8">
-        <div className="max-w-4xl text-center">
+        <div className="text-center px-8">
           <h2 className="text-4xl font-semibold text-gray-900 mb-8">About Medvora AI</h2>
           <div className="space-y-6 text-xl text-gray-700">
             <p>

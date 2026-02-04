@@ -14,7 +14,7 @@ export default function HelpStudentsSection() {
     <Section id="help-students" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 md:px-8 py-12 md:py-16">
         <h2 className="text-3xl md:text-4xl font-semibold text-white mb-8 md:mb-12">How We Help Students</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full px-8">
           {benefits.map((benefit, idx) => (
             <div
               key={idx}

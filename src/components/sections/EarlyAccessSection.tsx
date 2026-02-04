@@ -36,7 +36,7 @@ export default function EarlyAccessSection({
   };
 
   return (
-    <Section id="early-access" className="bg-black">
+    <Section id="early-access" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-8">
         <h2 className="text-5xl font-semibold text-white mb-6 text-center">
           Early Access is Out!

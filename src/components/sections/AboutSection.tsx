@@ -2,7 +2,7 @@ import Section from '../layout/Section';
 
 export default function AboutSection() {
   return (
-    <Section id="about" className="bg-white">
+    <Section id="about" className="bg-transparent">
       <div className="relative z-10 flex items-center justify-center h-full px-8">
         <div className="max-w-4xl text-center">
           <h2 className="text-4xl font-semibold text-gray-900 mb-8">About Medvora AI</h2>

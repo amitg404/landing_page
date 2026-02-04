@@ -10,7 +10,7 @@ const partners = [
 
 export default function PartnersSection() {
   return (
-    <Section id="partners" className="bg-black">
+    <Section id="partners" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-8">
         <h2 className="text-4xl font-semibold text-white mb-12">Our Partners</h2>
         <Marquee speed={50} className="w-full">

@@ -11,8 +11,8 @@ interface NavSectionProps {
 
 export default function NavSection({ viewMode, onModeChange, isDarkMode }: NavSectionProps) {
   return (
-    <Section id="navigation" className={isDarkMode ? 'bg-black' : 'bg-white'}>
-      <div className="relative z-10 flex items-center justify-center h-full">
+    <Section id="navigation" className={isDarkMode ? 'bg-transparent' : 'bg-transparent'}>
+      <div className="relative z-10 flex items-center justify-center py-16">
         <NavTabs activeMode={viewMode} onModeChange={onModeChange} />
       </div>
     </Section>

@@ -12,7 +12,7 @@ const stats = [
 
 export default function HelpDoctorsSection() {
   return (
-    <Section id="help-doctors" className="bg-white">
+    <Section id="help-doctors" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 md:px-8 py-12 md:py-16 overflow-y-auto">
         <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-3 md:mb-4">How We Help Doctors</h2>
         <p className="text-lg md:text-xl text-gray-600 mb-8 md:mb-12 text-center max-w-3xl px-4">

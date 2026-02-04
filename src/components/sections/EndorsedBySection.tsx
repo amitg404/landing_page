@@ -10,7 +10,7 @@ const endorsements = [
 
 export default function EndorsedBySection() {
   return (
-    <Section id="endorsed-by" className="bg-white">
+    <Section id="endorsed-by" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-8">
         <h2 className="text-4xl font-semibold text-gray-900 mb-12">Endorsed By</h2>
         <Marquee speed={50} className="w-full">

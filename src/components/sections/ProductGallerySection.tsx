@@ -12,7 +12,7 @@ export default function ProductGallerySection() {
   const [selectedImage, setSelectedImage] = useState(0);
 
   return (
-    <Section id="product-gallery" className="bg-black">
+    <Section id="product-gallery" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-8 py-16">
         <h2 className="text-4xl font-semibold text-white mb-12">Product Gallery</h2>
 

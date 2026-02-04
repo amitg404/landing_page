@@ -2,7 +2,7 @@ import Section from '../layout/Section';
 
 export default function Footer() {
   return (
-    <Section id="footer" className="bg-gray-900">
+    <Section id="footer" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-8">
         <div className="max-w-6xl w-full">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">

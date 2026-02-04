@@ -9,7 +9,7 @@ const compliances = [
 
 export default function ComplianceSection() {
   return (
-    <Section id="compliance" className="bg-white">
+    <Section id="compliance" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-8">
         <h2 className="text-4xl font-semibold text-gray-900 mb-12">Compliance & Security</h2>
         <Marquee speed={40} className="w-full">

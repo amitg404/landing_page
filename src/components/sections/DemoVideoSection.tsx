@@ -5,7 +5,7 @@ export default function DemoVideoSection() {
     <Section id="demo-video" className="bg-transparent">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-8">
         <h2 className="text-4xl font-semibold text-gray-900 mb-12">Demo Video</h2>
-        <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-2xl px-8">
+        <div className="w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl">
           <iframe
             width="100%"
             height="100%"

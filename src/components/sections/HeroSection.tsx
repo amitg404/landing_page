@@ -27,7 +27,9 @@ export default function HeroSection({ viewMode, scrollProgress }: HeroSectionPro
         <div className="w-[300px] h-[300px] mb-6" />
         
         <p className={`text-2xl md:text-3xl font-medium text-center max-w-3xl px-4 ${
-          viewMode === 'students' ? 'text-white' : 'text-gray-800'
+          viewMode === 'students' 
+            ? 'bg-gradient-to-r from-white via-white to-gray-200 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(255,255,255,0.3)]' 
+            : 'text-gray-800'
         }`}>
           Personalized Clinical AI Assistant for Doctors and Medical Students
         </p>

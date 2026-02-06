@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useCallback } from 'react';
+import React, { useLayoutEffect, useRef, useCallback, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import Lenis from 'lenis';
 
@@ -57,6 +57,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const cardsRef = useRef<HTMLElement[]>([]);
   const lastTransformsRef = useRef(new Map<number, any>());
   const isUpdatingRef = useRef(false);
+  const hasExitedRef = useRef(false);
 
   const calculateProgress = useCallback((scrollTop: number, start: number, end: number) => {
     if (scrollTop < start) return 0;
@@ -324,12 +325,75 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     updateCardTransforms
   ]);
 
+  // Handle wheel events to exit section after stacking completes
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller || useWindowScroll) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Check if we're at or near the bottom of the scroll container
+      const scrollTop = scroller.scrollTop;
+      const scrollHeight = scroller.scrollHeight;
+      const clientHeight = scroller.clientHeight;
+      const distanceToBottom = scrollHeight - scrollTop - clientHeight;
+      const isAtBottom = distanceToBottom < 50; // 50px threshold
+      
+      // If at bottom and scrolling down, exit to next section
+      if (isAtBottom && e.deltaY > 0 && !hasExitedRef.current) {
+        hasExitedRef.current = true;
+        
+        // Find the parent scroll container (the main snap-y container)
+        const mainContainer = document.querySelector('.snap-y') as HTMLElement;
+        if (mainContainer) {
+          // Find the section containing this ScrollStack
+          const currentSection = scroller.closest('section');
+          if (currentSection) {
+            // Find the next sibling section
+            const nextSection = currentSection.nextElementSibling as HTMLElement;
+            if (nextSection) {
+              // Scroll the main container to the next section
+              nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }
+        
+        // Reset the exit flag after a delay
+        setTimeout(() => {
+          hasExitedRef.current = false;
+        }, 1000);
+      }
+      
+      // If at top and scrolling up, exit to previous section
+      if (scrollTop <= 0 && e.deltaY < 0 && !hasExitedRef.current) {
+        hasExitedRef.current = true;
+        
+        const mainContainer = document.querySelector('.snap-y') as HTMLElement;
+        if (mainContainer) {
+          const currentSection = scroller.closest('section');
+          if (currentSection) {
+            const prevSection = currentSection.previousElementSibling as HTMLElement;
+            if (prevSection) {
+              prevSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }
+        
+        setTimeout(() => {
+          hasExitedRef.current = false;
+        }, 1000);
+      }
+    };
+
+    scroller.addEventListener('wheel', handleWheel, { passive: true });
+    return () => scroller.removeEventListener('wheel', handleWheel);
+  }, [useWindowScroll]);
+
   return (
     <div
       className={`relative w-full h-full overflow-y-auto overflow-x-visible ${className}`.trim()}
       ref={scrollerRef}
       style={{
-        overscrollBehavior: 'contain',
+        overscrollBehavior: 'auto',
         WebkitOverflowScrolling: 'touch',
         scrollBehavior: 'smooth',
         WebkitTransform: 'translateZ(0)',
@@ -337,7 +401,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         willChange: 'scroll-position'
       }}
     >
-      <div className="scroll-stack-inner pt-[20vh] px-20 pb-[50rem] min-h-screen">
+      <div className="scroll-stack-inner pt-[20vh] px-20 pb-[30vh] min-h-screen">
         {children}
         {/* Spacer so the last pin can release cleanly */}
         <div className="scroll-stack-end w-full h-px" />

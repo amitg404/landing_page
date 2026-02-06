@@ -3,11 +3,9 @@ import { motion, AnimatePresence } from 'motion/react';
 
 interface HeaderProps {
   scrollProgress: number;
-  isLoggedIn: boolean;
-  onLoginClick: () => void;
 }
 
-export default function Header({ scrollProgress, isLoggedIn, onLoginClick }: HeaderProps) {
+export default function Header({ scrollProgress }: HeaderProps) {
   const [showHeader, setShowHeader] = useState(false);
 
   useEffect(() => {
@@ -44,15 +42,6 @@ export default function Header({ scrollProgress, isLoggedIn, onLoginClick }: Hea
               className="w-full h-full object-contain"
             />
           </motion.div>
-
-          {!isLoggedIn && (
-            <button
-              onClick={onLoginClick}
-              className="btn-primary"
-            >
-              Login
-            </button>
-          )}
         </motion.header>
       )}
     </AnimatePresence>

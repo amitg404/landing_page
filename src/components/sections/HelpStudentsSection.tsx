@@ -14,7 +14,7 @@ export default function HelpStudentsSection() {
   return (
     <Section id="help-students" className="bg-transparent">
       <div className="relative z-10 w-full h-screen">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white text-center pt-8 md:pt-12 lg:pt-16 px-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white text-center pt-36 md:pt-12 lg:pt-16 px-4">
           How We Help Students
         </h2>
         <ScrollStack

@@ -1,6 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth, signInWithGoogle, saveBetaSignup } from './lib/firebase';
 import GradientText from './components/ui/GradientText';
 import FloatingCTA from './components/ui/FloatingCTA';
 import FeedbackWidget from './components/ui/FeedbackWidget';
@@ -30,15 +28,6 @@ type ViewMode = 'default' | 'students' | 'doctors';
 function App() {
   const [viewMode, setViewMode] = useState<ViewMode>('default');
   const [isScrolled, setIsScrolled] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-
-  // Auth listener
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
 
   // Track visited modes for simplified back navigation
   const [visitedModes, setVisitedModes] = useState<ViewMode[]>(['default']);
@@ -109,25 +98,6 @@ function App() {
     container.addEventListener('scroll', handleScroll);
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleLogin = async () => {
-    try {
-      await signInWithGoogle();
-    } catch (error) {
-      console.error('Login failed:', error);
-      alert('Login failed. Please try again.');
-    }
-  };
-
-  const handleBetaSignup = async () => {
-    if (!user?.email) return;
-    await saveBetaSignup(user.email, 'student_beta');
-  };
-
-  const handleDoctorInterest = async () => {
-    if (!user?.email) return;
-    await saveBetaSignup(user.email, 'doctor_interest');
-  };
 
   return (
     <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
@@ -232,12 +202,7 @@ function App() {
             <HelpStudentsSection />
             <ProductGallerySection />
             <PartnersSection />
-            <EarlyAccessSection
-              isLoggedIn={!!user}
-              userEmail={user?.email || null}
-              onSignup={handleBetaSignup}
-              onLoginRequired={handleLogin}
-            />
+            <EarlyAccessSection />
           </>
         )}
 
@@ -246,12 +211,7 @@ function App() {
             <HelpDoctorsSection />
             <DemoVideoSection />
             <ComplianceSection />
-            <ShowInterestSection
-              isLoggedIn={!!user}
-              userEmail={user?.email || null}
-              onShowInterest={handleDoctorInterest}
-              onLoginRequired={handleLogin}
-            />
+            <ShowInterestSection />
           </>
         )}
       </div>
@@ -261,16 +221,6 @@ function App() {
 
       {/* WIP Feedback Widget - bottom left */}
       <FeedbackWidget />
-
-      {/* Login button - fixed top right */}
-      {!user && (
-        <button
-          onClick={handleLogin}
-          className="fixed top-6 right-6 z-50 btn-primary"
-        >
-          Login
-        </button>
-      )}
     </div>
   );
 }

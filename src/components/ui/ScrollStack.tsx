@@ -388,6 +388,77 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     return () => scroller.removeEventListener('wheel', handleWheel);
   }, [useWindowScroll]);
 
+  // Handle touch events for mobile scroll exit
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller || useWindowScroll) return;
+
+    let touchStartY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (hasExitedRef.current) return;
+
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchY; // Positive = scrolling down
+      
+      const scrollTop = scroller.scrollTop;
+      const scrollHeight = scroller.scrollHeight;
+      const clientHeight = scroller.clientHeight;
+      const distanceToBottom = scrollHeight - scrollTop - clientHeight;
+      const isAtBottom = distanceToBottom < 10; // Tighter threshold for touch
+      
+      // If at bottom and swiping up (scrolling down), exit to next section
+      if (isAtBottom && deltaY > 30) { // Require some movement threshold
+        e.preventDefault(); // Prevent bounce/stuck
+        hasExitedRef.current = true;
+        
+        const mainContainer = document.querySelector('.snap-y') as HTMLElement;
+        if (mainContainer) {
+          const currentSection = scroller.closest('section');
+          if (currentSection) {
+            const nextSection = currentSection.nextElementSibling as HTMLElement;
+            if (nextSection) {
+              nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }
+        
+        setTimeout(() => { hasExitedRef.current = false; }, 1000);
+      }
+      
+      // If at top and swiping down (scrolling up), exit to previous section
+      if (scrollTop <= 0 && deltaY < -30) {
+        e.preventDefault();
+        hasExitedRef.current = true;
+        
+        const mainContainer = document.querySelector('.snap-y') as HTMLElement;
+        if (mainContainer) {
+          const currentSection = scroller.closest('section');
+          if (currentSection) {
+            const prevSection = currentSection.previousElementSibling as HTMLElement;
+            if (prevSection) {
+              prevSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }
+        
+        setTimeout(() => { hasExitedRef.current = false; }, 1000);
+      }
+    };
+
+    scroller.addEventListener('touchstart', handleTouchStart, { passive: true });
+    scroller.addEventListener('touchmove', handleTouchMove, { passive: false }); // non-passive to allow preventDefault
+    
+    return () => {
+      scroller.removeEventListener('touchstart', handleTouchStart);
+      scroller.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [useWindowScroll]);
+
   return (
     <div
       className={`relative w-full h-full overflow-y-auto overflow-x-visible ${className}`.trim()}

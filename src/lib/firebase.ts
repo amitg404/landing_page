@@ -5,12 +5,12 @@ import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore'
 // TODO: Replace with your Firebase config
 // Get these values from Firebase Console → Project Settings → General → Your apps
 const firebaseConfig = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_AUTH_DOMAIN',
-  projectId: 'YOUR_PROJECT_ID',
-  storageBucket: 'YOUR_STORAGE_BUCKET',
-  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  appId: 'YOUR_APP_ID'
+  apiKey: "AIzaSyBhHewjTq7Yo_Jvy1Jjs-bDOh8-0tXVSD0",
+  authDomain: "landing-page-medvora.firebaseapp.com",
+  projectId: "landing-page-medvora",
+  storageBucket: "landing-page-medvora.firebasestorage.app",
+  messagingSenderId: "716215201700",
+  appId: "1:716215201700:web:31440ef8010cf7c6f9db31"
 };
 
 // Initialize Firebase

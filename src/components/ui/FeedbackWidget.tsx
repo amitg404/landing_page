@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const BOT_TOKEN = '7656890184:AAGH-GphPdHuTtFYCS6DzvpdJI_qogFGptA';
-const CHAT_ID = '1520337166';
+const BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+const CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID;
 
 export default function FeedbackWidget() {
   const [isOpen, setIsOpen] = useState(false);

@@ -2,15 +2,14 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
 
-// TODO: Replace with your Firebase config
-// Get these values from Firebase Console → Project Settings → General → Your apps
+// Firebase config from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyBhHewjTq7Yo_Jvy1Jjs-bDOh8-0tXVSD0",
-  authDomain: "landing-page-medvora.firebaseapp.com",
-  projectId: "landing-page-medvora",
-  storageBucket: "landing-page-medvora.firebasestorage.app",
-  messagingSenderId: "716215201700",
-  appId: "1:716215201700:web:31440ef8010cf7c6f9db31"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

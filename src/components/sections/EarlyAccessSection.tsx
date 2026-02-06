@@ -2,21 +2,16 @@ import { useState } from 'react';
 import Section from '../layout/Section';
 import { supabase } from '../../lib/supabase';
 
-const BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
-const CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID;
-
-const DESIGNATIONS = ['', 'Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.'];
-
 export default function EarlyAccessSection() {
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   
   // Form fields
-  const [designation, setDesignation] = useState('');
-  const [name, setName] = useState('');
-  const [college, setCollege] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleButtonClick = () => {
     setShowForm(true);
@@ -25,50 +20,36 @@ export default function EarlyAccessSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name.trim() || !college.trim() || !email.trim()) return;
+    if (!firstName.trim() || !email.trim()) return;
 
     setIsSubmitting(true);
     
     try {
       // 1. Store in Supabase
-      const { error: supabaseError } = await supabase
-        .from('student_beta_signups')
+      const { error } = await supabase
+        .from('medvora_signup')
         .insert([{
-          name,
-          designation,
-          college,
+          first_name: firstName,
+          last_name: lastName,
           email,
-          created_at: new Date().toISOString()
+          phone: phone ? `+91${phone}` : ''
         }]);
 
-      if (supabaseError) {
-        console.warn('Supabase storage failed:', supabaseError);
-        // Continue to Telegram notification as fallback/parallel
+      if (error) {
+        throw error;
       }
 
-      // 2. Send Telegram Notification
-      const fullName = designation ? `${designation} ${name}` : name;
-      const text = `📚 Student Beta Signup\n\nName: ${fullName}\nCollege: ${college}\nEmail: ${email}`;
+      setShowConfirmation(true);
+      setShowForm(false);
+      // Reset form
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPhone('');
       
-      const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: CHAT_ID, text }),
-      });
-
-      if (response.ok) {
-        setShowConfirmation(true);
-        setShowForm(false);
-        // Reset form
-        setDesignation('');
-        setName('');
-        setCollege('');
-        setEmail('');
-      } else {
-        console.error('Failed to send signup');
-      }
     } catch (error) {
       console.error('Signup error:', error);
+      alert('Failed to submit. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -76,10 +57,10 @@ export default function EarlyAccessSection() {
 
   const handleCancel = () => {
     setShowForm(false);
-    setDesignation('');
-    setName('');
-    setCollege('');
+    setFirstName('');
+    setLastName('');
     setEmail('');
+    setPhone('');
   };
 
   return (
@@ -98,39 +79,25 @@ export default function EarlyAccessSection() {
           </div>
         ) : showForm ? (
           <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-            {/* Name field with designation */}
+            {/* Name fields */}
             <div className="flex gap-3">
-              <select
-                value={designation}
-                onChange={(e) => setDesignation(e.target.value)}
-                className="w-24 h-12 px-3 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white focus:border-white focus:outline-none transition-colors appearance-none cursor-pointer"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center', backgroundSize: '16px' }}
-              >
-                {DESIGNATIONS.map((d) => (
-                  <option key={d} value={d} className="bg-gray-900 text-white">
-                    {d || 'Title'}
-                  </option>
-                ))}
-              </select>
               <input
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Your Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="First Name"
+                required
+                className="flex-1 h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors"
+              />
+              <input
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Last Name"
                 required
                 className="flex-1 h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors"
               />
             </div>
-
-            {/* College field */}
-            <input
-              type="text"
-              value={college}
-              onChange={(e) => setCollege(e.target.value)}
-              placeholder="College / University"
-              required
-              className="w-full h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors"
-            />
 
             {/* Email field */}
             <input
@@ -141,6 +108,20 @@ export default function EarlyAccessSection() {
               required
               className="w-full h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors"
             />
+
+            {/* Phone field */}
+            <div className="flex gap-2">
+              <span className="h-12 px-3 flex items-center bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white font-medium">
+                +91
+              </span>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                placeholder="Phone Number"
+                className="flex-1 h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors"
+              />
+            </div>
 
             {/* Buttons */}
             <div className="flex gap-3 pt-2">
@@ -153,7 +134,7 @@ export default function EarlyAccessSection() {
               </button>
               <button
                 type="submit"
-                disabled={isSubmitting || !name.trim() || !college.trim() || !email.trim()}
+                disabled={isSubmitting || !firstName.trim() || !email.trim()}
                 className="flex-1 h-12 bg-white text-gray-900 rounded-xl font-semibold hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {isSubmitting ? 'Submitting...' : 'Submit'}

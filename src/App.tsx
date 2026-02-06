@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import GradientText from './components/ui/GradientText';
 import FloatingCTA from './components/ui/FloatingCTA';
-import FeedbackWidget from './components/ui/FeedbackWidget';
+
 
 // Backgrounds
 import Threads from './components/backgrounds/Threads';
@@ -219,8 +219,7 @@ function App() {
       {/* Floating CTA button for mode switching */}
       <FloatingCTA currentMode={viewMode} onNavigate={handleModeChange} />
 
-      {/* WIP Feedback Widget - bottom left */}
-      <FeedbackWidget />
+
     </div>
   );
 }

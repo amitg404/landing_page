@@ -1,4 +1,3 @@
-import Section from '../layout/Section';
 import LogoLoop from '../ui/LogoLoop';
 
 const partners = [
@@ -10,9 +9,9 @@ const partners = [
 
 export default function PartnersSection() {
   return (
-    <Section id="partners" className="bg-transparent">
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 md:px-8">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-8 md:mb-10 lg:mb-12">
+    <section id="partners" className="relative w-full py-12 md:py-16 bg-transparent">
+      <div className="relative z-10 flex flex-col items-center px-4 md:px-8">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-8 md:mb-10">
           Our Partners
         </h2>
         <LogoLoop
@@ -26,6 +25,6 @@ export default function PartnersSection() {
           ariaLabel="Our Partners"
         />
       </div>
-    </Section>
+    </section>
   );
 }

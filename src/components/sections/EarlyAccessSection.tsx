@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Section from '../layout/Section';
 import { supabase } from '../../lib/supabase';
 
 export default function EarlyAccessSection() {
@@ -25,7 +24,6 @@ export default function EarlyAccessSection() {
     setIsSubmitting(true);
     
     try {
-      // 1. Store in Supabase
       const { error } = await supabase
         .from('medvora_signup')
         .insert([{
@@ -41,7 +39,6 @@ export default function EarlyAccessSection() {
 
       setShowConfirmation(true);
       setShowForm(false);
-      // Reset form
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -64,16 +61,16 @@ export default function EarlyAccessSection() {
   };
 
   return (
-    <Section id="early-access" className="bg-transparent">
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-8">
-        <h2 className="text-5xl font-semibold text-white mb-6 text-center">
+    <section id="early-access" className="relative w-full py-16 md:py-24 bg-transparent">
+      <div className="relative z-10 flex flex-col items-center px-4 md:px-8">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-4 md:mb-6 text-center">
           Early Access is Out!
         </h2>
-        <p className="text-2xl text-white/80 mb-12 text-center">Try the beta today</p>
+        <p className="text-xl md:text-2xl text-white/80 mb-8 md:mb-12 text-center">Try the beta today</p>
 
         {showConfirmation ? (
-          <div className="bg-green-500/20 border-2 border-green-500 rounded-2xl p-8 max-w-md text-center">
-            <p className="text-xl text-white font-medium">
+          <div className="bg-green-500/20 border-2 border-green-500 rounded-2xl p-6 md:p-8 max-w-md text-center">
+            <p className="text-lg md:text-xl text-white font-medium">
               Thank you for your interest! We'll send you an email regarding the beta product.
             </p>
           </div>
@@ -144,12 +141,12 @@ export default function EarlyAccessSection() {
         ) : (
           <button
             onClick={handleButtonClick}
-            className="btn-primary text-xl px-12 py-6"
+            className="btn-primary text-lg md:text-xl px-8 md:px-12 py-4 md:py-6"
           >
             Join Beta
           </button>
         )}
       </div>
-    </Section>
+    </section>
   );
 }

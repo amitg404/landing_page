@@ -1,47 +1,38 @@
-import Section from '../layout/Section';
-import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
-
 export default function HelpStudentsSection() {
   const benefits = [
-    'Reduce eye strain with optimized study interfaces',
-    'Faster learning through AI-powered personalization',
-    'Interactive practice with instant feedback',
-    'Comprehensive medical knowledge database',
-    'Study progress tracking and analytics',
-    'Collaborative learning tools'
+    { num: 1, text: 'Reduce eye strain with optimized study interfaces' },
+    { num: 2, text: 'Faster learning through AI-powered personalization' },
+    { num: 3, text: 'Interactive practice with instant feedback' },
+    { num: 4, text: 'Comprehensive medical knowledge database' },
+    { num: 5, text: 'Study progress tracking and analytics' },
+    { num: 6, text: 'Collaborative learning tools' }
   ];
 
   return (
-    <Section id="help-students" className="bg-transparent">
-      <div className="relative z-10 w-full h-screen">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white text-center pt-36 md:pt-12 lg:pt-16 px-4">
+    <section id="help-students" className="relative w-full py-12 md:py-16 bg-transparent">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white text-center mb-8">
           How We Help Students
         </h2>
-        <ScrollStack
-          itemDistance={50}
-          itemScale={0.05}
-          itemStackDistance={20}
-          stackPosition="15%"
-          scaleEndPosition="10%"
-          baseScale={0.9}
-        >
-          {benefits.map((benefit, idx) => (
-            <ScrollStackItem
-              key={idx}
-              itemClassName="bg-white/10 backdrop-blur-md border border-white/20"
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          {benefits.map((benefit) => (
+            <div
+              key={benefit.num}
+              className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 transition-colors"
             >
-              <div className="flex items-start gap-4 h-full">
-                <div className="w-12 h-12 rounded-full bg-[#3333CC] flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-semibold text-xl">{idx + 1}</span>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#3333CC] flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-semibold text-lg">{benefit.num}</span>
                 </div>
-                <p className="text-xl md:text-2xl text-white leading-relaxed flex items-center h-full">
-                  {benefit}
+                <p className="text-lg md:text-xl text-white leading-relaxed">
+                  {benefit.text}
                 </p>
               </div>
-            </ScrollStackItem>
+            </div>
           ))}
-        </ScrollStack>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }

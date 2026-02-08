@@ -124,6 +124,7 @@ interface ThreadsProps {
   distance?: number;
   enableMouseInteraction?: boolean;
   className?: string;
+  backgroundColor?: string;
 }
 
 const Threads = ({ 
@@ -131,7 +132,8 @@ const Threads = ({
   amplitude = 0.6, 
   distance = 0.2, 
   enableMouseInteraction = false,
-  className = ''
+  className = '',
+  backgroundColor = 'transparent'
 }: ThreadsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number>();
@@ -223,7 +225,7 @@ const Threads = ({
     };
   }, [color, amplitude, distance, enableMouseInteraction]);
 
-  return <div ref={containerRef} className={`w-full h-full absolute inset-0 ${className}`} />;
+  return <div ref={containerRef} className={`w-full h-full absolute inset-0 ${className}`} style={{ backgroundColor }} />;
 };
 
 export default Threads;

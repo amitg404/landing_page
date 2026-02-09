@@ -29,7 +29,7 @@ function GlareButton({
     el.style.transition = 'none';
     el.style.backgroundPosition = '-100% -100%';
     requestAnimationFrame(() => {
-      el.style.transition = '1500ms ease';
+      el.style.transition = '300ms ease';
       el.style.backgroundPosition = '200% 200%';
     });
   };
@@ -159,7 +159,7 @@ export default function NavTabs({ activeMode, onModeChange }: NavTabsProps) {
         className={`relative z-10 overflow-hidden px-4 py-2 md:px-8 md:py-4 lg:px-12 lg:py-6 xl:px-16 xl:py-8 text-sm md:text-lg lg:text-2xl xl:text-3xl font-semibold rounded-xl transition-colors duration-300 ${
           activeMode === 'doctors'
             ? 'text-white'
-            : 'text-gray-800'
+            : activeMode === 'students' ? 'text-white' : 'text-gray-800'
         }`}
       >
         For Doctors

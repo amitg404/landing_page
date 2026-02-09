@@ -59,66 +59,72 @@ export default function TeamSection() {
   }, []);
 
   return (
-    <section id="team" className="relative w-full py-16 md:py-24 bg-transparent">
-      <div className="relative z-10 flex flex-col items-center px-4 md:px-8">
-        <AnimatedContent
-          distance={50}
-          direction="vertical"
-          reverse={false}
-          initialOpacity={0}
-          animateOpacity
-          scale={0.9}
-          threshold={0.1}
-        >
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-900 mb-8 md:mb-12">
-            Meet the Team
-          </h2>
-        </AnimatedContent>
+    <section id="team" className="relative w-full py-12 md:py-24 bg-transparent overflow-hidden">
+      <div className="relative flex flex-col items-center px-4 md:px-8">
+        {/* Title - positioned with isolation to ensure it's above cards */}
+        <div className="w-full text-center mb-0 md:mb-12 relative" style={{ zIndex: 100 }}>
+          <AnimatedContent
+            distance={50}
+            direction="vertical"
+            reverse={false}
+            initialOpacity={0}
+            animateOpacity
+            scale={0.9}
+            threshold={0.1}
+          >
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-900">
+              Meet the Team
+            </h2>
+          </AnimatedContent>
+        </div>
 
-        <AnimatedContent
-          distance={50}
-          direction="vertical"
-          reverse={false}
-          initialOpacity={0}
-          animateOpacity
-          scale={0.9}
-          threshold={0.1}
-          delay={200}
-          className="w-full max-w-5xl"
-        >
-          {isMobile ? (
-             <div style={{ height: '400px', position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <CardSwap
-                cardDistance={5} // Reduced distance to keep cards centered
-                verticalDistance={15} // Reduced vertical stack
-                delay={3000}
-                pauseOnHover={true}
-                width="100%"
-                height="100%"
-              >
-                {teamMembers.map((member, idx) => (
-                  <Card key={idx} className="overflow-hidden border-2" style={{ borderColor: member.borderColor || 'transparent', background: '#1c1c1c', width: '280px', height: '360px' }}>
-                    <div className="relative h-full w-full flex flex-col">
-                       <img src={member.image} alt={member.title} className="w-full h-3/4 object-cover" />
-                       <div className="p-4 bg-gradient-to-t from-black to-transparent flex flex-col justify-end h-1/4">
-                         <h3 className="text-white text-xl font-bold">{member.title}</h3>
-                         <p className="text-gray-300">{member.subtitle}</p>
-                       </div>
-                    </div>
-                  </Card>
-                ))}
-              </CardSwap>
-            </div>
-          ) : (
-            <ChromaGrid 
-              items={teamMembers}
-              radius={350}
-              damping={0.45}
-              fadeOut={0.6}
-              ease="power3.out"
-            />
-          )}
-        </AnimatedContent>
+        {/* Cards container - positioned below the title with lower z-index */}
+        <div className="w-full max-w-5xl relative" style={{ zIndex: 10 }}>
+          <AnimatedContent
+            distance={50}
+            direction="vertical"
+            reverse={false}
+            initialOpacity={0}
+            animateOpacity
+            scale={0.9}
+            threshold={0.1}
+            delay={200}
+          >
+            {isMobile ? (
+              // Increased marginTop to 80px to prevent card stack from overlapping the title
+              <div className="relative w-full flex justify-center" style={{ height: '400px', marginTop: '80px' }}>
+                <CardSwap
+                  cardDistance={5}
+                  verticalDistance={15}
+                  delay={3000}
+                  pauseOnHover={true}
+                  width="100%"
+                  height="100%"
+                >
+                  {teamMembers.map((member, idx) => (
+                    <Card key={idx} className="overflow-hidden border-2" style={{ borderColor: member.borderColor || 'transparent', background: '#1c1c1c', width: '260px', height: '340px' }}>
+                      <div className="relative h-full w-full flex flex-col">
+                         <img src={member.image} alt={member.title} className="w-full h-3/4 object-cover" />
+                         <div className="p-4 bg-gradient-to-t from-black to-transparent flex flex-col justify-end h-1/4">
+                           <h3 className="text-white text-xl font-bold">{member.title}</h3>
+                           <p className="text-gray-300">{member.subtitle}</p>
+                         </div>
+                      </div>
+                    </Card>
+                  ))}
+                </CardSwap>
+              </div>
+            ) : (
+              <ChromaGrid 
+                items={teamMembers}
+                radius={350}
+                damping={0.45}
+                fadeOut={0.6}
+                ease="power3.out"
+              />
+            )}
+          </AnimatedContent>
+        </div>
       </div>
     </section>
   );

@@ -69,15 +69,19 @@ export default function EarlyAccessSection() {
         <p className="text-xl md:text-2xl text-white/80 mb-8 md:mb-12 text-center">Try the beta today</p>
 
         {showConfirmation ? (
-          <div className="bg-green-500/20 border-2 border-green-500 rounded-2xl p-6 md:p-8 max-w-md text-center">
-            <p className="text-lg md:text-xl text-white font-medium">
-              Thank you for your interest! We'll send you an email regarding the beta product.
+          <div className="text-center py-8">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-2">
+              You're on the list!
+            </h2>
+            <p className="text-lg md:text-xl text-white/80">
+              We'll get in touch
             </p>
           </div>
         ) : showForm ? (
-          <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-            {/* Name fields */}
-            <div className="flex gap-3">
+          <form onSubmit={handleSubmit} className="w-full max-w-sm md:max-w-md space-y-4 px-2">
+            {/* Name fields - stacked on mobile */}
+            {/* Name fields - side by side on all devices */}
+            <div className="flex flex-row gap-3">
               <input
                 type="text"
                 value={firstName}
@@ -85,6 +89,7 @@ export default function EarlyAccessSection() {
                 placeholder="First Name"
                 required
                 className="flex-1 h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors"
+                style={{ minWidth: 0 }} // Prevent flex item from overflowing
               />
               <input
                 type="text"
@@ -93,6 +98,7 @@ export default function EarlyAccessSection() {
                 placeholder="Last Name"
                 required
                 className="flex-1 h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors"
+                style={{ minWidth: 0 }}
               />
             </div>
 
@@ -108,7 +114,7 @@ export default function EarlyAccessSection() {
 
             {/* Phone field */}
             <div className="flex gap-2">
-              <span className="h-12 px-3 flex items-center bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white font-medium">
+              <span className="h-12 px-3 flex items-center bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white font-medium shrink-0">
                 +91
               </span>
               <input
@@ -116,12 +122,12 @@ export default function EarlyAccessSection() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
                 placeholder="Phone Number"
-                className="flex-1 h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors"
+                className="flex-1 h-12 px-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl text-white placeholder:text-white/50 focus:border-white focus:outline-none transition-colors min-w-0"
               />
             </div>
 
-            {/* Buttons */}
-            <div className="flex gap-3 pt-2">
+            {/* Buttons - with extra bottom margin for mobile to clear FloatingCTA */}
+            <div className="flex gap-3 pt-2 pb-16 md:pb-2">
               <button
                 type="button"
                 onClick={handleCancel}

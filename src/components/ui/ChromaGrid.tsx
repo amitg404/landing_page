@@ -154,7 +154,7 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
           key={i}
           onMouseMove={handleCardMove}
           onClick={() => handleCardClick(c.url)}
-          className="group relative flex flex-col rounded-[20px] overflow-hidden border-2 border-transparent transition-colors duration-300 cursor-pointer aspect-[3/4]"
+          className="group relative rounded-[20px] overflow-hidden border-2 border-transparent transition-colors duration-300 cursor-pointer aspect-[3/4]"
           style={
             {
               '--card-border': c.borderColor || 'transparent',
@@ -170,10 +170,12 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
                 'radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 70%)'
             }}
           />
-          <div className="relative z-10 flex-1 p-2 box-border">
+          {/* Image takes full card */}
+          <div className="absolute inset-0 p-2 box-border">
             <img src={c.image} alt={c.title} loading="lazy" className="w-full h-full object-cover rounded-[12px]" />
           </div>
-          <footer className="relative z-10 p-3 text-white font-sans">
+          {/* Footer positioned at bottom with gradient overlay for readability */}
+          <footer className="absolute bottom-0 left-0 right-0 z-50 p-3 text-white font-sans bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-8">
             <h3 className="m-0 text-base md:text-lg font-semibold">{c.title}</h3>
             <p className="m-0 text-sm opacity-85">{c.subtitle}</p>
           </footer>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 type ViewMode = 'default' | 'students' | 'doctors';
 
@@ -9,6 +9,24 @@ interface FloatingCTAProps {
 
 export default function FloatingCTA({ currentMode, onNavigate }: FloatingCTAProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  // Detect if form is open by checking for form elements with MutationObserver
+  useEffect(() => {
+    const checkForm = () => {
+      const form = document.querySelector('form');
+      setIsFormOpen(!!form);
+    };
+    
+    // Initial check
+    checkForm();
+    
+    // Watch for DOM changes
+    const observer = new MutationObserver(checkForm);
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    return () => observer.disconnect();
+  }, []);
 
   // Timer cycle: hidden 5s → visible 3s → repeat
   useEffect(() => {
@@ -47,35 +65,31 @@ export default function FloatingCTA({ currentMode, onNavigate }: FloatingCTAProp
     };
   }, [currentMode]);
 
-  // Don't render in default mode
+  const handleClick = useCallback(() => {
+    const targetMode = currentMode === 'students' ? 'doctors' : 'students';
+    onNavigate(targetMode);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentMode, onNavigate]);
+
+  // Don't render in default mode or when form is open
   if (currentMode === 'default') return null;
+  
+  // Hide completely when form is open
+  if (isFormOpen) return null;
 
   const isStudentMode = currentMode === 'students';
-
-  const handleClick = () => {
-    const targetMode = isStudentMode ? 'doctors' : 'students';
-    onNavigate(targetMode);
-    
-    // Scroll to the top of the page (section 1) after a brief delay for mode change
-    setTimeout(() => {
-      const container = document.querySelector('.snap-y');
-      if (container) {
-        container.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }, 50);
-  };
 
   return (
     <div
       onClick={handleClick}
-      className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40 
+      className={`fixed bottom-6 right-4 md:bottom-8 md:right-6 z-30 
         cursor-pointer group
-        bg-white/95 backdrop-blur-sm
+        bg-white/80 backdrop-blur-sm
         rounded-2xl
         shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.18)]
         border border-gray-100
         p-3 md:p-4
-        max-w-[180px] md:max-w-[220px]
+        w-[160px] md:w-[200px]
         transform hover:-translate-y-1
         transition-all duration-500 ease-out
         ${isVisible 
@@ -84,10 +98,10 @@ export default function FloatingCTA({ currentMode, onNavigate }: FloatingCTAProp
         }`}
     >
       {/* Text content */}
-      <p className="text-xs md:text-sm text-gray-600 mb-2 leading-snug">
+      <p className="text-[10px] md:text-xs text-gray-600 mb-2 leading-snug line-clamp-2">
         {isStudentMode 
-          ? 'See how we help doctors streamline clinical workflows'
-          : 'Empower your medical journey with AI-driven learning'
+          ? 'See how we help doctors'
+          : 'AI-powered learning for students'
         }
       </p>
       

@@ -37,7 +37,7 @@ export default function ProductGallerySection() {
           </h2>
         </AnimatedContent>
 
-        {/* Main image display - Added min-height to prevent collapse if image loads late */}
+        {/* Main image display */}
         <AnimatedContent
           distance={50}
           direction="vertical"
@@ -49,7 +49,7 @@ export default function ProductGallerySection() {
           delay={200}
           className="w-full max-w-3xl mb-6 md:mb-8 relative group"
         >
-          <div className="rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20 relative bg-black/50 min-h-[300px] md:min-h-[400px]">
+          <div className="rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20 relative bg-black/50 aspect-video flex items-center justify-center">
              {/* Navigation Arrows */}
             <button 
               onClick={(e) => { e.stopPropagation(); prevImage(); }}
@@ -70,7 +70,7 @@ export default function ProductGallerySection() {
             <img
               src={products[selectedImage].image}
               alt={products[selectedImage].alt}
-              className="w-full h-auto transition-opacity duration-300"
+              className="max-w-full max-h-full object-contain transition-opacity duration-300"
             />
           </div>
         </AnimatedContent>
@@ -85,7 +85,7 @@ export default function ProductGallerySection() {
           scale={0.9}
           threshold={0.1}
           delay={400}
-          className="flex gap-2 md:gap-4 flex-wrap justify-center min-h-[80px]"
+          className="flex gap-2 md:gap-4 flex-wrap justify-center"
         >
           {products.map((product, idx) => (
             <button

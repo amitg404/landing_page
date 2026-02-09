@@ -93,9 +93,12 @@ export default function ShowInterestSection() {
           className="w-full flex justify-center"
         >
           {showConfirmation ? (
-            <div className="bg-green-100 border-2 border-green-500 rounded-2xl p-8 max-w-md text-center">
-              <p className="text-xl text-gray-900 font-medium">
-                Thank you for your interest! We'll notify you when the product is ready.
+            <div className="text-center py-8">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-900 mb-2">
+                You're on the list!
+              </h2>
+              <p className="text-lg md:text-xl text-gray-600">
+                We'll get in touch
               </p>
             </div>
           ) : showForm ? (
@@ -109,6 +112,7 @@ export default function ShowInterestSection() {
                   placeholder="First Name"
                   required
                   className="flex-1 h-12 px-4 bg-white border-2 border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none transition-colors"
+                  style={{ minWidth: 0 }}
                 />
                 <input
                   type="text"
@@ -117,6 +121,7 @@ export default function ShowInterestSection() {
                   placeholder="Last Name"
                   required
                   className="flex-1 h-12 px-4 bg-white border-2 border-gray-300 rounded-xl text-gray-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none transition-colors"
+                  style={{ minWidth: 0 }}
                 />
               </div>
 

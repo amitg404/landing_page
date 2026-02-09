@@ -137,7 +137,20 @@ const Threads = ({
 }: ThreadsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number>();
+  const programRef = useRef<Program | null>(null);
 
+  // Update uniforms when props change (without recreating the WebGL context)
+  useEffect(() => {
+    if (programRef.current) {
+      programRef.current.uniforms.uColor.value.r = color[0];
+      programRef.current.uniforms.uColor.value.g = color[1];
+      programRef.current.uniforms.uColor.value.b = color[2];
+      programRef.current.uniforms.uAmplitude.value = amplitude;
+      programRef.current.uniforms.uDistance.value = distance;
+    }
+  }, [color, amplitude, distance]);
+
+  // Initialize WebGL context only once
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
@@ -165,6 +178,7 @@ const Threads = ({
       }
     });
 
+    programRef.current = program;
     const mesh = new Mesh(gl, { geometry, program });
 
     function resize() {
@@ -222,8 +236,10 @@ const Threads = ({
       }
       if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
+      programRef.current = null;
     };
-  }, [color, amplitude, distance, enableMouseInteraction]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enableMouseInteraction]); // Only reinitialize if enableMouseInteraction changes
 
   return <div ref={containerRef} className={`w-full h-full absolute inset-0 ${className}`} style={{ backgroundColor }} />;
 };

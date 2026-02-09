@@ -1,4 +1,3 @@
-import { useRef, useEffect } from 'react';
 import CountUp from '../ui/CountUp';
 import AnimatedContent from '../ui/AnimatedContent';
 

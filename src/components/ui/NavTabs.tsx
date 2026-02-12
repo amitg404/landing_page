@@ -30,15 +30,15 @@ function HoverButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`relative z-10 overflow-hidden rounded-xl transition-all duration-300 cursor-pointer
-        px-6 py-3 md:px-10 md:py-5 lg:px-14 lg:py-6 xl:px-16 xl:py-7
-        text-sm md:text-lg lg:text-2xl xl:text-3xl font-semibold
+        px-4 py-2 md:px-8 md:py-4 lg:px-12 lg:py-5 xl:px-14 xl:py-6
+        text-sm md:text-base lg:text-xl xl:text-2xl font-semibold
         ${isActive
           ? 'bg-[#3333CC] text-white shadow-[0_4px_12px_rgba(51,51,204,0.3)]'
           : 'bg-white text-[#1c1c1c] border-2 border-[#dedede] hover:border-[#b0b0b0] shadow-[0_2px_4px_rgba(0,0,0,0.05)]'
         }
         ${!isActive ? 'hover:-translate-y-[2px]' : ''}
       `}
-      style={{ minWidth: isActive ? undefined : '140px' }}
+      style={{ minWidth: isActive ? undefined : '100px' }}
     >
       <div className="relative overflow-hidden" style={{ height: '1.4em' }}>
         {/* Default text */}
@@ -119,7 +119,7 @@ export default function NavTabs({ activeMode, onModeChange }: NavTabsProps) {
   return (
     <div
       ref={containerRef}
-      className="relative flex items-center gap-3 md:gap-4 p-2"
+      className="relative flex items-center gap-3 md:gap-4 p-2 overflow-hidden rounded-2xl"
     >
       {/* Animated sliding indicator (behind the active button) */}
       <div
@@ -129,6 +129,7 @@ export default function NavTabs({ activeMode, onModeChange }: NavTabsProps) {
           width: `${indicatorStyle.width}px`,
           opacity: indicatorStyle.opacity,
           transition: 'left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s ease-out, opacity 0.3s ease',
+          maxWidth: '100%', // Prevent overflow
         }}
       />
 

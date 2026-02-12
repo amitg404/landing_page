@@ -27,16 +27,17 @@ export default function DemoVideoSection() {
           delay={200}
           className="w-full max-w-4xl mx-auto"
         >
-          <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
+          <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
             <iframe
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1"
               title="Medvora Demo"
               frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
-              className="w-full h-full"
+              loading="lazy"
+              className="absolute inset-0 w-full h-full"
             ></iframe>
           </div>
         </AnimatedContent>

@@ -89,52 +89,7 @@ export default function ShowInterestSection() {
           </AnimatedContent>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {/* Left column: Contact details */}
-            <AnimatedContent
-              distance={30}
-              direction="horizontal"
-              reverse={true}
-              initialOpacity={0}
-              animateOpacity
-              scale={0.95}
-              threshold={0.1}
-              delay={200}
-            >
-              <div className="bg-white rounded-2xl p-6 md:p-8 h-full flex flex-col justify-center border border-[#dedede] shadow-[0_4px_8px_rgba(0,0,0,0.08)]">
-                <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-6">Contact Us</h3>
-                <div className="space-y-5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-[#ebebfa] flex items-center justify-center flex-shrink-0">
-                      <Mail size={20} className="text-[#3333CC]" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Email</p>
-                      <p className="text-gray-900 font-medium">contact@medvora.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-[#ebebfa] flex items-center justify-center flex-shrink-0">
-                      <Phone size={20} className="text-[#3333CC]" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Phone</p>
-                      <p className="text-gray-900 font-medium">+91 00000 00000</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-[#ebebfa] flex items-center justify-center flex-shrink-0">
-                      <MapPin size={20} className="text-[#3333CC]" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Address</p>
-                      <p className="text-gray-900 font-medium">India</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </AnimatedContent>
-
-            {/* Right column: Interest form */}
+            {/* Right column: Interest form - appears first on mobile */}
             <AnimatedContent
               distance={30}
               direction="horizontal"
@@ -144,6 +99,7 @@ export default function ShowInterestSection() {
               scale={0.95}
               threshold={0.1}
               delay={400}
+              className="order-1 md:order-2"
             >
               <form onSubmit={handleSubmit} className="space-y-4">
                 <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">Register Interest</h3>
@@ -204,6 +160,52 @@ export default function ShowInterestSection() {
                   </button>
                 </div>
               </form>
+            </AnimatedContent>
+
+            {/* Left column: Contact details - appears second on mobile */}
+            <AnimatedContent
+              distance={30}
+              direction="horizontal"
+              reverse={true}
+              initialOpacity={0}
+              animateOpacity
+              scale={0.95}
+              threshold={0.1}
+              delay={200}
+              className="order-2 md:order-1"
+            >
+              <div className="bg-white rounded-2xl p-6 md:p-8 h-full flex flex-col justify-center border border-[#dedede] shadow-[0_4px_8px_rgba(0,0,0,0.08)]">
+                <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-6">Contact Us</h3>
+                <div className="space-y-5">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-[#ebebfa] flex items-center justify-center flex-shrink-0">
+                      <Mail size={20} className="text-[#3333CC]" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Email</p>
+                      <p className="text-gray-900 font-medium">contact@medvora.com</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-[#ebebfa] flex items-center justify-center flex-shrink-0">
+                      <Phone size={20} className="text-[#3333CC]" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Phone</p>
+                      <p className="text-gray-900 font-medium">+91 00000 00000</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-[#ebebfa] flex items-center justify-center flex-shrink-0">
+                      <MapPin size={20} className="text-[#3333CC]" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Address</p>
+                      <p className="text-gray-900 font-medium">India</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </AnimatedContent>
           </div>
         )}

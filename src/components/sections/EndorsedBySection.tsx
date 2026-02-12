@@ -1,10 +1,11 @@
 import AnimatedContent from '../ui/AnimatedContent';
 
 const endorsements = [
-  { src: '/microsoft_for startups.webp', alt: 'Microsoft for Startups' },
-  { src: '/vadhwani_foundation.webp', alt: 'Wadhwani Foundation' },
-  { src: '/eleven_labs.png', alt: 'Eleven Labs' },
-  { src: '/block71.avif', alt: 'Block71' }
+  { src: '/endorsed_by/microsoft_for startups.webp', alt: 'Microsoft for Startups' },
+  { src: '/endorsed_by/vadhwani_foundation.webp', alt: 'Wadhwani Foundation' },
+  { src: '/endorsed_by/eleven_labs.png', alt: 'Eleven Labs' },
+  { src: '/endorsed_by/block71.avif', alt: 'Block71' },
+  { src: '/endorsed_by/IIT_Dharwad.svg', alt: 'IIT Dharwad' }
 ];
 
 export default function EndorsedBySection() {

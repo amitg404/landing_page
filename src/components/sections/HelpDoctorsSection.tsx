@@ -73,7 +73,7 @@ function DoctorBentoCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`${item.span} relative overflow-hidden rounded-2xl bg-white p-5 md:p-6 cursor-default group shadow-[0_4px_8px_rgba(0,0,0,0.08)] border border-[#dedede] hover:shadow-[0_8px_16px_rgba(0,0,0,0.1)]`}
+      className={`${item.span} relative overflow-hidden rounded-2xl bg-white p-4 md:p-5 lg:p-6 cursor-default group shadow-[0_4px_8px_rgba(0,0,0,0.08)] border border-[#dedede] hover:shadow-[0_8px_16px_rgba(0,0,0,0.1)]`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -93,12 +93,12 @@ function DoctorBentoCard({
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none border border-[#3333CC]/30" />
 
       <div className="relative z-10">
-        <div className="text-3xl md:text-4xl font-semibold text-[#3333CC] mb-1">
+        <div className="text-2xl md:text-3xl lg:text-4xl font-semibold text-[#3333CC] mb-1">
           <CountUp to={item.stat} duration={1.5} separator="," />
           {item.suffix}
         </div>
-        <p className="text-xs md:text-sm text-gray-600 font-medium mb-3">{item.label}</p>
-        <h3 className="text-lg md:text-xl font-semibold text-gray-900">{item.title}</h3>
+        <p className="text-xs md:text-sm text-gray-600 font-medium mb-2 md:mb-3">{item.label}</p>
+        <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">{item.title}</h3>
       </div>
     </motion.div>
   );
@@ -106,8 +106,8 @@ function DoctorBentoCard({
 
 export default function HelpDoctorsSection() {
   return (
-    <section id="help-doctors" className="relative w-full py-16 md:py-24 bg-transparent">
-      <div className="relative z-10 px-4 md:px-8 max-w-7xl mx-auto">
+    <section id="help-doctors" className="relative w-full py-12 md:py-16 lg:py-24 bg-transparent">
+      <div className="relative z-10 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
         <AnimatedContent
           distance={50}
           direction="vertical"
@@ -117,24 +117,24 @@ export default function HelpDoctorsSection() {
           scale={0.9}
           threshold={0.1}
         >
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-3 md:mb-4 text-center">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-900 mb-2 md:mb-3 lg:mb-4 text-center">
             How We Help Doctors
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 mb-8 md:mb-12 text-center px-4 md:px-8 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 lg:mb-12 text-center px-2 md:px-4 lg:px-8 max-w-3xl mx-auto">
             Reducing cognitive load, increasing patient context, and improving time efficiency
           </p>
         </AnimatedContent>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
           {/* Left: Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 auto-rows-min">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-5 auto-rows-min mt-8 md:mt-12 lg:mt-16">
             {bentoItems.map((item, idx) => (
               <DoctorBentoCard key={idx} item={item} index={idx} />
             ))}
           </div>
 
           {/* Right: Card Stack - User Flow */}
-          <div className="relative">
+          <div className="relative h-full">
             <AnimatedContent
               distance={30}
               direction="horizontal"
@@ -148,7 +148,7 @@ export default function HelpDoctorsSection() {
               <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-6 text-center lg:text-left">
                 Doctor's User Flow
               </h3>
-              <div className="h-[500px] md:h-[600px] rounded-2xl overflow-hidden">
+              <div className="h-[520px] md:h-[560px] rounded-2xl overflow-hidden">
                 <ScrollStack
                   itemDistance={60}
                   itemScale={0.04}
@@ -156,18 +156,18 @@ export default function HelpDoctorsSection() {
                   stackPosition="15%"
                   scaleEndPosition="8%"
                   baseScale={0.88}
-                  blurAmount={1}
+                  blurAmount={0}
                 >
                   {userFlowSteps.map((step) => (
                     <ScrollStackItem key={step.step}>
-                      <div className="bg-white rounded-[24px] p-6 md:p-8 h-full border-2 border-[#dedede] shadow-[0_4px_8px_rgba(0,0,0,0.08)] flex flex-col justify-center">
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-[#3333CC] flex items-center justify-center flex-shrink-0">
-                            <span className="text-white font-bold text-xl">{step.step}</span>
+                      <div className="bg-white rounded-[20px] md:rounded-[24px] p-6 md:p-8 lg:p-10 h-full border-2 border-[#dedede] shadow-[0_4px_8px_rgba(0,0,0,0.08)] flex flex-col justify-center">
+                        <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
+                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#3333CC] flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-bold text-lg md:text-xl">{step.step}</span>
                           </div>
-                          <h4 className="text-xl md:text-2xl font-semibold text-gray-900">{step.title}</h4>
+                          <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-900">{step.title}</h4>
                         </div>
-                        <p className="text-base md:text-lg text-gray-600 leading-relaxed pl-16">
+                        <p className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed pl-13 md:pl-16">
                           {step.description}
                         </p>
                       </div>

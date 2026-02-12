@@ -9,7 +9,7 @@ export interface ScrollStackItemProps {
 
 export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({ children, itemClassName = '' }) => (
   <div
-    className={`scroll-stack-card relative w-full h-80 my-8 p-12 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
+    className={`scroll-stack-card relative w-full h-80 my-8 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
     style={{
       backfaceVisibility: 'hidden',
       transformStyle: 'preserve-3d'
@@ -336,7 +336,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       const scrollHeight = scroller.scrollHeight;
       const clientHeight = scroller.clientHeight;
       const distanceToBottom = scrollHeight - scrollTop - clientHeight;
-      const isAtBottom = distanceToBottom < 50; // 50px threshold
+      const isAtBottom = distanceToBottom < 200; // Increased threshold for easier exit
       
       // If at bottom and scrolling down, exit to next section
       if (isAtBottom && e.deltaY > 0 && !hasExitedRef.current) {
@@ -360,11 +360,11 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         // Reset the exit flag after a delay
         setTimeout(() => {
           hasExitedRef.current = false;
-        }, 1000);
+        }, 500); // Reduced timeout for faster re-triggering
       }
       
       // If at top and scrolling up, exit to previous section
-      if (scrollTop <= 0 && e.deltaY < 0 && !hasExitedRef.current) {
+      if (scrollTop <= 50 && e.deltaY < 0 && !hasExitedRef.current) {
         hasExitedRef.current = true;
         
         const mainContainer = document.querySelector('.snap-y') as HTMLElement;
@@ -380,7 +380,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         
         setTimeout(() => {
           hasExitedRef.current = false;
-        }, 1000);
+        }, 500);
       }
     };
 
@@ -409,10 +409,10 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       const scrollHeight = scroller.scrollHeight;
       const clientHeight = scroller.clientHeight;
       const distanceToBottom = scrollHeight - scrollTop - clientHeight;
-      const isAtBottom = distanceToBottom < 10; // Tighter threshold for touch
+      const isAtBottom = distanceToBottom < 100; // Increased threshold for easier mobile exit
       
       // If at bottom and swiping up (scrolling down), exit to next section
-      if (isAtBottom && deltaY > 30) { // Require some movement threshold
+      if (isAtBottom && deltaY > 20) { // Reduced movement threshold for easier trigger
         e.preventDefault(); // Prevent bounce/stuck
         hasExitedRef.current = true;
         
@@ -427,11 +427,11 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
           }
         }
         
-        setTimeout(() => { hasExitedRef.current = false; }, 1000);
+        setTimeout(() => { hasExitedRef.current = false; }, 500);
       }
       
       // If at top and swiping down (scrolling up), exit to previous section
-      if (scrollTop <= 0 && deltaY < -30) {
+      if (scrollTop <= 50 && deltaY < -20) {
         e.preventDefault();
         hasExitedRef.current = true;
         
@@ -446,7 +446,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
           }
         }
         
-        setTimeout(() => { hasExitedRef.current = false; }, 1000);
+        setTimeout(() => { hasExitedRef.current = false; }, 500);
       }
     };
 
@@ -472,7 +472,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         willChange: 'scroll-position'
       }}
     >
-      <div className="scroll-stack-inner pt-[20vh] px-20 pb-[30vh] min-h-screen">
+      <div className="scroll-stack-inner pt-[20vh] px-4 md:px-8 pb-[30vh] min-h-screen">
         {children}
         {/* Spacer so the last pin can release cleanly */}
         <div className="scroll-stack-end w-full h-px" />

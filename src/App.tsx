@@ -125,45 +125,35 @@ function App() {
       </div>
 
       {/* Hero Section - First section with centered logo */}
-      <section className="relative z-10 w-full h-screen flex items-center justify-center">
+      <section className="relative z-10 w-full h-screen flex items-center justify-center px-4">
         {viewMode === "default" ? (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center gap-6 md:gap-8">
             <img
               src="/medvora_logo.png"
               alt="Medvora"
-              className="w-[180px] h-auto md:w-[240px] lg:w-[280px] xl:w-[320px] pointer-events-none"
+              className="w-[220px] h-auto sm:w-[300px] md:w-[380px] lg:w-[480px] xl:w-[560px] pointer-events-none"
             />
-            <div className="flex flex-col items-center gap-0 mt-[20px] pointer-events-none px-4 md:px-6">
-              <GradientText
-                colors={["#3333CC", "#8989e1", "#3333CC"]}
-                animationSpeed={3}
-                showBorder={false}
-                className="text-lg md:text-2xl lg:text-3xl xl:text-4xl font-medium text-center max-w-4xl"
-              >
+            <div className="flex flex-col items-center gap-2 md:gap-3 pointer-events-none px-4 md:px-6 max-w-4xl">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium text-center text-[#3b3b3b]">
                 Personalized Clinical AI Assistant for Doctors
-              </GradientText>
-              <GradientText
-                colors={["#3333CC", "#8989e1", "#3333CC"]}
-                animationSpeed={3}
-                showBorder={false}
-                className="text-lg md:text-2xl lg:text-3xl xl:text-4xl font-medium text-center max-w-4xl"
-              >
+              </p>
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium text-center text-[#3b3b3b]">
                 Empowering Medical Students with AI enabled learning
-              </GradientText>
+              </p>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row items-center gap-0 md:gap-4 lg:gap-6 px-4">
+          <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6 lg:gap-8 px-4">
             <img
               src="/medvora_logo.png"
               alt="Medvora"
-              className="w-[180px] h-[180px] md:w-[250px] md:h-[250px] lg:w-[350px] lg:h-[350px] xl:w-[400px] xl:h-[400px] object-contain pointer-events-none"
+              className="w-[220px] h-auto sm:w-[300px] md:w-[380px] lg:w-[480px] xl:w-[560px] pointer-events-none"
             />
             <GradientText
               colors={["#949494", "#b0b0b0", "#3333CC"]}
               animationSpeed={4}
               showBorder={false}
-              className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold pointer-events-none text-center md:text-left -mt-6 md:mt-0"
+              className="text-lg sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl font-semibold pointer-events-none text-center md:text-left -mt-2 md:mt-0"
             >
               {viewMode === "students" ? "For Students" : "For Doctors"}
             </GradientText>
@@ -173,21 +163,24 @@ function App() {
 
       {/* Small logo - top left, fades in when scrolled */}
       <div
-        className={`fixed top-4 left-4 md:top-6 md:left-6 z-50 transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed top-1 left-1 md:top-1.5 md:left-1.5 z-50 transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
+        {/* Solid white blur background for maximum logo visibility */}
+        <div className="absolute inset-0 bg-white blur-lg rounded-full" />
+        
         <img
           src="/medvora_logo.png"
           alt="Medvora"
           onClick={handleLogoClick}
-          className="w-16 h-16 md:w-24 md:h-24 object-contain cursor-pointer hover:scale-105 transition-transform duration-300"
+          className="relative z-10 w-24 h-24 md:w-36 md:h-36 lg:w-40 lg:h-40 object-contain cursor-pointer hover:scale-105 transition-transform duration-300"
         />
       </div>
 
       {/* Top fade overlay */}
       <div
-        className={`fixed top-0 left-0 right-0 h-24 z-40 pointer-events-none transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0"}`}
+        className={`fixed top-0 left-0 right-0 h-32 z-40 pointer-events-none transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0"}`}
         style={{
-          background: "linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.5) 50%, transparent 100%)",
+          background: "linear-gradient(to bottom, rgba(245,245,245,0.98) 0%, rgba(245,245,245,0.7) 50%, transparent 100%)",
         }}
       />
 

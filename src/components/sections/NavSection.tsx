@@ -10,7 +10,7 @@ interface NavSectionProps {
 export default function NavSection({ viewMode, onModeChange }: NavSectionProps) {
   return (
     <section id="navigation" className="relative w-full py-16 md:py-24 bg-transparent">
-      <div className="relative z-10 flex flex-col items-center gap-6 px-4">
+      <div className="relative z-10 flex flex-col items-center gap-12 md:gap-16 px-4">
         <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-gray-700 transition-colors duration-500">
           Discover What We Offer
         </h2>

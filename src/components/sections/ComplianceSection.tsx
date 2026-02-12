@@ -1,9 +1,10 @@
 import AnimatedContent from '../ui/AnimatedContent';
 
 const compliances = [
-  { src: '/dpdp.png', alt: 'DPDP' },
-  { src: '/hippa.png', alt: 'HIPAA' },
-  { src: '/gdpr.jpg', alt: 'GDPR' },
+  { src: '/Compliance/dpdp.png', alt: 'DPDP' },
+  { src: '/Compliance/hippa.png', alt: 'HIPAA' },
+  { src: '/Compliance/gdpr.jpg', alt: 'GDPR' },
+  { src: '/Compliance/disha.jpg', alt: 'DISHA' },
 ];
 
 export default function ComplianceSection() {
@@ -35,7 +36,7 @@ export default function ComplianceSection() {
           delay={200}
           className="w-full max-w-4xl"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {compliances.map((logo, idx) => (
               <div
                 key={idx}

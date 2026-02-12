@@ -1,10 +1,10 @@
 import AnimatedContent from '../ui/AnimatedContent';
 
 const partners = [
-  { src: '/IIT_Dharwad.svg', alt: 'IIT Dharwad' },
-  { src: '/college.png', alt: 'College 1' },
-  { src: '/college1.png', alt: 'College 2' },
-  { src: '/mmc.jpg', alt: 'MMC' },
+  { src: '/Partners/college.png', alt: 'College 1' },
+  { src: '/Partners/college1.png', alt: 'College 2' },
+  { src: '/Partners/mmc.jpg', alt: 'MMC' },
+  { src: '/Partners/akash.jpg', alt: 'Akash' },
 ];
 
 export default function PartnersSection() {

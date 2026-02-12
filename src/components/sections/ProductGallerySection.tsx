@@ -5,23 +5,54 @@ import AnimatedContent from '../ui/AnimatedContent';
 import Section from '../layout/Section';
 
 const products = [
-  { id: 1, image: '/product1.png', alt: 'Medvora Dashboard Interface' },
-  { id: 2, image: '/product2.png', alt: 'AI Diagnostic Analysis' },
-  { id: 3, image: '/product3.png', alt: 'Patient Management System' },
-  { id: 4, image: '/product4.png', alt: 'Mobile App View' },
+  { id: 1, image: '/image_gallery/product1.png', alt: 'Medvora Dashboard Interface' },
+  { id: 2, image: '/image_gallery/product2.png', alt: 'AI Diagnostic Analysis' },
+  { id: 3, image: '/image_gallery/product3.png', alt: 'Patient Management System' },
+  { id: 4, image: '/image_gallery/product4.png', alt: 'Mobile App View' },
 ];
 
 export default function ProductGallerySection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [direction, setDirection] = useState<'left' | 'right'>('right');
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Minimum swipe distance (in px) to trigger navigation
+  const minSwipeDistance = 50;
 
   const nextImage = useCallback(() => {
+    setDirection('right');
     setActiveIndex((prev) => (prev + 1) % products.length);
   }, []);
 
   const prevImage = useCallback(() => {
+    setDirection('left');
     setActiveIndex((prev) => (prev - 1 + products.length) % products.length);
   }, []);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextImage(); // Swipe left = next image (comes from right)
+    } else if (isRightSwipe) {
+      prevImage(); // Swipe right = previous image (comes from left)
+    }
+  };
 
   useEffect(() => {
     if (isPaused) return;
@@ -59,6 +90,9 @@ export default function ProductGallerySection() {
           className="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center p-4"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           {/* Main Carousel Container */}
           <div className="relative w-full h-full flex items-center justify-center perspective-1000">
@@ -119,7 +153,12 @@ export default function ProductGallerySection() {
               <motion.div
                 key={`active-${products[activeIndex].id}`}
                 layoutId={`img-${products[activeIndex].id}`}
-                initial={{ scale: 0.85, opacity: 0.5, filter: 'blur(4px)' }}
+                initial={{ 
+                  x: direction === 'right' ? '100%' : '-100%',
+                  scale: 0.85, 
+                  opacity: 0.5, 
+                  filter: 'blur(4px)' 
+                }}
                 animate={{ 
                   x: 0, 
                   scale: 1, 
@@ -127,7 +166,12 @@ export default function ProductGallerySection() {
                   zIndex: 10,
                   filter: 'blur(0px)'
                 }}
-                exit={{ scale: 0.85, opacity: 0.5, filter: 'blur(4px)' }}
+                exit={{ 
+                  x: direction === 'right' ? '-100%' : '100%',
+                  scale: 0.85, 
+                  opacity: 0.5, 
+                  filter: 'blur(4px)' 
+                }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="absolute w-[90%] md:w-[70%] aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.2)] bg-white border border-[#dedede]"
               >

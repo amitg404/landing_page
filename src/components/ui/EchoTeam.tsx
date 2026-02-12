@@ -69,13 +69,6 @@ const defaultTeamMembers: TeamMember[] = [
     image: '/Team/Shreenatha M,COO and Director Quadwave-Mentor and Board member.png',
     bio: 'Strategic operations guidance',
     linkedIn: 'https://www.linkedin.com/in/shreenatha/'
-  },
-  {
-    name: 'Sudhanva Dhananjaya',
-    role: 'CMD Excelsoft Technologies Ltd, Mentor',
-    image: '/Team/Sudhanva Dhananjaya, CMD Excelsoft Technologies Ltd -Mentor.png',
-    bio: 'Technology leadership mentor',
-    linkedIn: 'https://www.linkedin.com/in/sudhanva-dhananjaya-087356/'
   }
 ];
 

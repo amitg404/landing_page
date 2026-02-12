@@ -30,8 +30,8 @@ function HoverButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`relative z-10 overflow-hidden rounded-xl transition-all duration-300 cursor-pointer
-        px-4 py-2 md:px-8 md:py-4 lg:px-12 lg:py-5 xl:px-14 xl:py-6
-        text-sm md:text-base lg:text-xl xl:text-2xl font-semibold
+        px-8 py-3 md:px-8 md:py-4 lg:px-12 lg:py-5 xl:px-14 xl:py-6
+        text-base md:text-base lg:text-xl xl:text-2xl font-semibold
         ${isActive
           ? 'bg-[#3333CC] text-white shadow-[0_4px_12px_rgba(51,51,204,0.3)]'
           : 'bg-white text-[#1c1c1c] border-2 border-[#dedede] hover:border-[#b0b0b0] shadow-[0_2px_4px_rgba(0,0,0,0.05)]'

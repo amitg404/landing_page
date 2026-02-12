@@ -163,16 +163,16 @@ function App() {
 
       {/* Small logo - top left, fades in when scrolled */}
       <div
-        className={`fixed top-1 left-1 md:top-1.5 md:left-1.5 z-50 transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed top-8 left-4 md:top-6 md:left-6 z-50 transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
-        {/* Solid white blur background for maximum logo visibility */}
-        <div className="absolute inset-0 bg-white blur-lg rounded-full" />
+        {/* Solid white blur background - smaller to fit actual logo content */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-12 md:w-24 md:h-16 lg:w-28 lg:h-18 bg-white blur-lg rounded-full" />
         
         <img
           src="/medvora_logo.png"
           alt="Medvora"
           onClick={handleLogoClick}
-          className="relative z-10 w-24 h-24 md:w-36 md:h-36 lg:w-40 lg:h-40 object-contain cursor-pointer hover:scale-105 transition-transform duration-300"
+          className="relative z-10 w-24 h-auto md:w-28 lg:w-32 object-contain cursor-pointer hover:scale-105 transition-transform duration-300"
         />
       </div>
 
@@ -186,13 +186,28 @@ function App() {
 
       {/* Content Layer */}
       <div className="relative z-10 pb-24 md:pb-32">
+        {/* About Section - First in default mode */}
+        {viewMode === "default" && (
+          <AboutSection onSwitchTab={(mode) => {
+            handleModeChange(mode);
+            // Scroll to top of page to show the Hero section
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }} />
+        )}
+
         {/* Navigation Section */}
-        <NavSection viewMode={viewMode} onModeChange={handleModeChange} />
+        <NavSection 
+          viewMode={viewMode} 
+          onModeChange={(mode) => {
+            handleModeChange(mode);
+            // Scroll to top of page to show the Hero section
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }} 
+        />
 
         {/* Content sections based on mode */}
         {viewMode === "default" && (
           <div className="space-y-16 md:space-y-24">
-            <AboutSection />
             <EndorsedBySection />
             <TeamSection />
           </div>

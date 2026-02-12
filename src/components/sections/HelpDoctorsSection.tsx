@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 import CountUp from '../ui/CountUp';
 import AnimatedContent from '../ui/AnimatedContent';
-import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
 
 const bentoItems = [
   {
@@ -125,57 +124,54 @@ export default function HelpDoctorsSection() {
           </p>
         </AnimatedContent>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
-          {/* Left: Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-5 auto-rows-min mt-8 md:mt-12 lg:mt-16">
-            {bentoItems.map((item, idx) => (
-              <DoctorBentoCard key={idx} item={item} index={idx} />
-            ))}
+        <div className="flex flex-col gap-16 md:gap-24">
+          {/* Top: Bento Grid */}
+          <div className="w-full max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 auto-rows-min mt-8 md:mt-12">
+              {bentoItems.map((item, idx) => (
+                <DoctorBentoCard key={idx} item={item} index={idx} />
+              ))}
+            </div>
           </div>
 
-          {/* Right: Card Stack - User Flow */}
-          <div className="relative h-full">
-            <AnimatedContent
-              distance={30}
-              direction="horizontal"
-              reverse={false}
-              initialOpacity={0}
-              animateOpacity
-              scale={0.95}
-              threshold={0.1}
-              delay={300}
-            >
-              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-6 text-center lg:text-left">
-                Doctor's User Flow
-              </h3>
-              <div className="h-[520px] md:h-[560px] rounded-2xl overflow-hidden">
-                <ScrollStack
-                  itemDistance={60}
-                  itemScale={0.04}
-                  itemStackDistance={20}
-                  stackPosition="15%"
-                  scaleEndPosition="8%"
-                  baseScale={0.88}
-                  blurAmount={0}
-                >
-                  {userFlowSteps.map((step) => (
-                    <ScrollStackItem key={step.step}>
-                      <div className="bg-white rounded-[20px] md:rounded-[24px] p-6 md:p-8 lg:p-10 h-full border-2 border-[#dedede] shadow-[0_4px_8px_rgba(0,0,0,0.08)] flex flex-col justify-center">
-                        <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
-                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#3333CC] flex items-center justify-center flex-shrink-0">
-                            <span className="text-white font-bold text-lg md:text-xl">{step.step}</span>
-                          </div>
-                          <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-900">{step.title}</h4>
-                        </div>
-                        <p className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed pl-13 md:pl-16">
-                          {step.description}
-                        </p>
-                      </div>
-                    </ScrollStackItem>
-                  ))}
-                </ScrollStack>
+          {/* Bottom: Doctor's User Flow - Vertical Timeline for ALL screens */}
+          <div className="w-full max-w-2xl mx-auto">
+            <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-8 md:mb-12 text-center">
+              Doctor's User Flow
+            </h3>
+
+            <div className="relative pl-4 md:pl-8">
+              {/* Vertical Loop Line */}
+              <div className="absolute left-[27px] md:left-[43px] top-6 bottom-6 w-0.5 md:w-1 bg-gradient-to-b from-[#3333CC] via-[#3333CC]/50 to-transparent" />
+              
+              <div className="space-y-8 md:space-y-12">
+                {userFlowSteps.map((step) => (
+                  <motion.div 
+                    key={step.step} 
+                    className="relative flex gap-6 md:gap-10"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    {/* Step Circle */}
+                    <div className="flex-shrink-0 w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#3333CC] text-white flex items-center justify-center text-sm md:text-base font-bold shadow-md z-10 mt-1">
+                      {step.step}
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-grow pt-1">
+                      <h4 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 leading-tight">
+                        {step.title}
+                      </h4>
+                      <p className="text-sm md:text-lg text-gray-600 leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-            </AnimatedContent>
+            </div>
           </div>
         </div>
 
@@ -187,9 +183,9 @@ export default function HelpDoctorsSection() {
           animateOpacity
           scale={1}
           threshold={0.1}
-          delay={600}
+          delay={300}
         >
-          <div className="mt-8 md:mt-12 text-center px-4 md:px-8 max-w-4xl mx-auto">
+          <div className="mt-16 md:mt-24 text-center px-4 md:px-8 max-w-4xl mx-auto">
             <p className="text-base md:text-lg text-gray-700">
               Medvora reduces these burnout rates by automating administrative tasks, providing
               instant patient insights, and streamlining clinical workflows.
